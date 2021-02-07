@@ -5,6 +5,7 @@
     <td colspan="2">正常进度</td>
     <td colspan="2">落后于计划或者修改过的内容</td>
     <td colspan="2">已经完成</td>
+    <td colspan="2">奖励</td>
   </tr>
   
   <tr>
