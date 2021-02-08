@@ -18,8 +18,8 @@
   </tr>
   
   <tr>
-  <td rowspan="3">1. 完成《PyTorch入门教程》的文字稿</td>
-  <td>1.1 完成数据集章节</td>
+  <td rowspan="3">1. 完成《PyTorch入门教程》系列文字</td>
+  <td>1.1 完成数据类型及操作相关章节</td>
   <td></td>
   <td></td>
   <td></td>
@@ -29,7 +29,7 @@
   </tr>
     
   <tr>
-  <td>1.2 完成网络搭建章节</td>
+  <td>1.2 完成神经网络相关章节</td>
   <td></td>
   <td></td>
   <td></td>
@@ -39,7 +39,39 @@
   </tr>
   
   <tr>
-  <td>1.3完成数据类型章节</td>
+  <td>1.3完成总体概述及练习相关章节</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  </tr>
+  
+  
+  <tr>
+  <td rowspan="3">2. 完成《PyTorch入门教程》系列视频</td>
+  <td>1.1 完成数据类型及操作相关章节</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  </tr>
+    
+  <tr>
+  <td>1.2 完成神经网络相关章节</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>1.3完成总体概述及练习相关章节</td>
   <td></td>
   <td></td>
   <td></td>
