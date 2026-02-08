@@ -1,0 +1,424 @@
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme) important;
+@import 'tailwindcss/utilities.css' layer(utilities) important;
+
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is([data-theme="dark"] *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-gradient: gradient 8s linear infinite;
+
+  @keyframes gradient {
+    to {
+      background-position: var(--bg-size, 300%) 0;
+    }
+  }
+}
+
+@layer base {
+  /*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border, currentColor);
+  }
+
+  * {
+    scrollbar-width: thin;
+  }
+
+  :root {
+    --radius: 0.65rem;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+  }
+
+  html[data-theme='dark'] {
+    --background: oklch(20.8% 0.042 265.755);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(20.8% 0.042 265.755);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(20.8% 0.042 265.755);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.606 0.25 292.717);
+    --primary-foreground: oklch(0.969 0.016 293.756);
+    --secondary: oklch(27.9% 0.041 260.031);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(27.9% 0.041 260.031);
+    --muted-foreground: oklch(0.705 0.015 286.067);
+    --accent: oklch(27.9% 0.041 260.031);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.38 0.189 293.745);
+    --chart-1: oklch(0.811 0.111 293.571);
+    --chart-2: oklch(0.606 0.25 292.717);
+    --chart-3: oklch(0.541 0.281 293.009);
+    --chart-4: oklch(0.491 0.27 292.581);
+    --chart-5: oklch(0.432 0.232 292.759);
+    --sidebar: oklch(20.8% 0.042 265.755);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.606 0.25 292.717);
+    --sidebar-primary-foreground: oklch(0.969 0.016 293.756);
+    --sidebar-accent: oklch(27.9% 0.041 260.031);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.38 0.189 293.745);
+  }
+
+  html {
+    font: var(--ifm-font-size-base) / var(--ifm-line-height-base) var(--ifm-font-family-base);
+  }
+}
+
+:root {
+  /* Docusaurus vars */
+  --prism-background-color: #edefff;
+  --ifm-footer-background-color: #fff;
+  --ifm-footer-link-color: #333;
+  --ifm-code-font-size: 95%;
+  --ifm-color-primary: #044cc1;
+  --ifm-h1-font-size: 2.5rem;
+  --docusaurus-highlighted-code-line-bg: #0000001a;
+  --ifm-global-shadow-tl: 2px 3px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  --ifm-font-family-base:
+    Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, system-ui, -apple-system, sans-serif,
+    BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
+  --menu-link-active: rgba(0, 0, 0, 0.1);
+  --ifm-menu-link-padding-vertical: 0.5rem;
+  --docs-fg-base: #030712;
+  --ifm-menu-color-active: var(--docs-fg-base);
+
+  /* Docsearch color */
+  --docsearch-key-gradient: linear-gradient(-225deg, #d5dbe4, #f8f8f8);
+  --docsearch-key-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px #1e235a66;
+  --docsearch-muted-color: #969faf;
+}
+
+html[data-theme='dark'] {
+  /* Docusaurus color */
+  --prism-background-color: #1d2144;
+  --ifm-background-color: #14102c;
+  --ifm-background-surface-color: #14102c;
+  --ifm-footer-link-color: #dadde1;
+  --ifm-color-primary: #16ad8d;
+  --ifm-menu-color-background-active: #ffffff1a;
+  --menu-link-active: rgba(255, 255, 255, 0.1);
+  --ifm-menu-color-active: var(--ifm-color-primary);
+
+  /* Docsearch color */
+  --table-of-contents-color: #e8e8e8;
+  --docusaurus-highlighted-code-line-bg: #0000004d;
+  --docsearch-muted-color: #7f8497;
+  --docsearch-key-gradient: linear-gradient(-26.5deg, #565872, #31355b);
+  --docsearch-key-shadow:
+    inset 0 -2px 0 0 #282d55, inset 0 0 1px 1px #51577d, 0 2px 2px 0 #0304094d;
+
+  /* Custom css */
+  .background-grid {
+    &::before {
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(248 250 252)' stroke-dasharray='5 3' transform='scale(1, -1)' %3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E");
+    }
+  }
+}
+
+@utility blog-tags {
+  & b {
+    @apply hidden;
+  }
+}
+
+@layer components {
+  .background-grid {
+    @apply relative z-0 bg-slate-100;
+    @apply dark:bg-[#0c1222];
+
+    &::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      content: '';
+      opacity: 0.65;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(226 232 240)' stroke-dasharray='5 3' transform='scale(1, -1)' %3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E");
+      mask-image: linear-gradient(transparent, black, transparent);
+    }
+  }
+
+  .background-grid--fade-in {
+    @apply bg-transparent bg-linear-to-t from-slate-100 via-slate-100;
+    @apply dark:bg-transparent dark:from-[#0c1222] dark:via-[#0c1222];
+
+    &::before {
+      @apply bg-bottom-left;
+
+      mask-image: linear-gradient(transparent, black, black);
+    }
+  }
+
+  .background-grid--fade-out {
+    @apply bg-transparent bg-linear-to-b from-slate-100 via-slate-100;
+    @apply dark:bg-transparent dark:from-[#0c1222] dark:via-[#0c1222];
+
+    &::before {
+      mask-image: linear-gradient(black, black, transparent);
+    }
+  }
+
+  .background-image {
+    &--fade-out {
+      mask-image: linear-gradient(black, black, transparent);
+    }
+  }
+}
+
+.markdown h1:first-child {
+  --ifm-h1-font-size: 2rem;
+}
+
+a {
+  @apply hover:no-underline;
+}
+
+a[class^='footerLogoLink_'] {
+  opacity: 1;
+}
+
+button {
+  @apply border-0;
+}
+
+/* Custom CSS that should always be included */
+.navbar__item svg,
+.menu__link svg,
+.footer__link-item svg {
+  display: none;
+}
+
+.header-github-link::before {
+  content: '';
+  width: 24px;
+  height: 24px;
+  display: flex;
+  background-color: var(--ifm-navbar-link-color);
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E");
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.header-github-link:hover::before {
+  background-color: var(--ifm-navbar-link-hover-color);
+}
+
+/* Bilibili 图标 */
+/* Bilibili 图标 (更新版) */
+.header-bilibili-link::before {
+  content: '';
+  width: 26px;
+  height: 26px;
+  display: flex;
+  background-color: #00aeec; /* Bilibili 官方蓝 - 明亮模式默认颜色 */
+  /* 使用你提供的新 SVG */
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M36.5,12h-7.086l3.793-3.793c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L26.586,12 h-5.172l-5.207-5.207c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L18.586,12H12.5C9.467,12,7,14.467,7,17.5v15 c0,3.033,2.467,5.5,5.5,5.5h2c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h14c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h2 c3.033,0,5.5-2.467,5.5-5.5v-15C42,14.467,39.533,12,36.5,12z M39,32.5c0,1.378-1.122,2.5-2.5,2.5h-24c-1.378,0-2.5-1.122-2.5-2.5 v-15c0-1.378,1.122-2.5,2.5-2.5h24c1.378,0,2.5,1.122,2.5,2.5V32.5z'/%3E%3Crect width='2.75' height='7.075' x='30.625' y='18.463' transform='rotate(-71.567 32.001 22)'/%3E%3Crect width='7.075' height='2.75' x='14.463' y='20.625' transform='rotate(-18.432 17.998 21.997)'/%3E%3Cpath d='M28.033,27.526c-0.189,0.593-0.644,0.896-1.326,0.896c-0.076-0.013-0.139-0.013-0.24-0.025 c-0.013,0-0.05-0.013-0.063,0c-0.341-0.05-0.745-0.177-1.061-0.467c-0.366-0.265-0.808-0.745-0.947-1.477 c0,0-0.29,1.174-0.896,1.49c-0.076,0.05-0.164,0.114-0.253,0.164l-0.038,0.025c-0.303,0.164-0.682,0.265-1.086,0.278 c-0.568-0.051-0.947-0.328-1.136-0.821l-0.063-0.164l-1.427,0.656l0.05,0.139c0.467,1.124,1.465,1.768,2.74,1.768 c0.922,0,1.667-0.303,2.209-0.909c0.556,0.606,1.288,0.909,2.209,0.909c1.856,0,2.55-1.288,2.765-1.843l0.051-0.126l-1.427-0.657 L28.033,27.526z'/%3E%3C/svg%3E");
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.header-bilibili-link:hover::before {
+  background-color: #0099d4; /* Bilibili 悬停时稍深的蓝色 */
+}
+
+html[data-theme='dark'] .header-bilibili-link::before {
+  background-color: #00aeec; /* 暗黑模式下也使用 Bilibili 官方蓝 */
+}
+
+
+.header-wechat-link::before {
+  content: '';
+  width: 24px; /* 微调大小以视觉平衡 */
+  height: 24px;
+  display: block;
+  background-color: #07c160; /* 微信绿 - 明亮模式默认颜色 */
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M 19 6 C 9.625 6 2 12.503906 2 20.5 C 2 24.769531 4.058594 28.609375 7.816406 31.390625 L 5.179688 39.304688 L 13.425781 34.199219 C 15.714844 34.917969 18.507813 35.171875 21.203125 34.875 C 23.390625 39.109375 28.332031 42 34 42 C 35.722656 42 37.316406 41.675781 38.796875 41.234375 L 45.644531 45.066406 L 43.734375 38.515625 C 46.3125 36.375 48 33.394531 48 30 C 48 23.789063 42.597656 18.835938 35.75 18.105469 C 34.40625 11.152344 27.367188 6 19 6 Z M 13 14 C 14.101563 14 15 14.898438 15 16 C 15 17.101563 14.101563 18 13 18 C 11.898438 18 11 17.101563 11 16 C 11 14.898438 11.898438 14 13 14 Z M 25 14 C 26.101563 14 27 14.898438 27 16 C 27 17.101563 26.101563 18 25 18 C 23.898438 18 23 17.101563 23 16 C 23 14.898438 23.898438 14 25 14 Z M 34 20 C 40.746094 20 46 24.535156 46 30 C 46 32.957031 44.492188 35.550781 42.003906 37.394531 L 41.445313 37.8125 L 42.355469 40.933594 L 39.105469 39.109375 L 38.683594 39.25 C 37.285156 39.71875 35.6875 40 34 40 C 27.253906 40 22 35.464844 22 30 C 22 24.535156 27.253906 20 34 20 Z M 29.5 26 C 28.699219 26 28 26.699219 28 27.5 C 28 28.300781 28.699219 29 29.5 29 C 30.300781 29 31 28.300781 31 27.5 C 31 26.699219 30.300781 26 29.5 26 Z M 38.5 26 C 37.699219 26 37 26.699219 37 27.5 C 37 28.300781 37.699219 29 38.5 29 C 39.300781 29 40 28.300781 40 27.5 C 40 26.699219 39.300781 26 38.5 26 Z'/%3E%3C/svg%3E");
+  transition: background-color 0.2s ease;
+}
+
+.header-wechat-link:hover::before {
+  background-color: #06ad56; /* 微信绿悬停时稍深的绿色 */
+}
+
+html[data-theme='dark'] .header-wechat-link::before {
+  background-color: #07c160; /* 暗黑模式下也使用微信绿 */
+}
+
+
+/*  Keyboard search keys */
+kbd {
+  &[class^='searchHint_'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--docsearch-key-gradient);
+    border: 0;
+    border-radius: 3px;
+    box-shadow: var(--docsearch-key-shadow);
+    color: var(--docsearch-muted-color);
+    height: 20px;
+    margin-right: 0.4em;
+    padding: 0 7px 2px;
+  }
+
+  &.searchHint_btn {
+    display: inline-block;
+    align-items: unset;
+    justify-content: unset;
+    height: unset;
+    margin-left: 0.4rem;
+    padding: 4px 10px;
+  }
+}
+
+/* Search navbar (local search) */
+.navbar__search-input {
+  padding: 0 2rem 0 2.25rem;
+  width: 13.5rem;
+}
+
+code[class^='codeBlockLines_'] {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+div[class^='tableOfContents_'] {
+  font-weight: 500;
+
+  &::before {
+    content: 'Table of Contents';
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 15px;
+  }
+}
+
+div[class^='docItemContainer_'] article nav + div > button.clean-btn {
+  color: #ffffff00;
+
+  &::before {
+    content: 'Table of Contents';
+    color: var(--ifm-breadcrumb-color-active);
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  &::after {
+    content: ')';
+  }
+}
+
+div[class^='docItemContainer_'] article img {
+  display: block;
+  margin: auto;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+}
+
+[class^='title_'] {
+  font-size: 2.3rem !important;
+}
+
+#__blog-post-container img[class^='img_'] {
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+}
+
+/* Tablet */
+@media screen and (max-width: 991px) {
+  /* Search navbar local */
+  .navbar__search-input {
+    width: 14rem;
+    padding: 0 0.5rem 0 2.25rem;
+  }
+}

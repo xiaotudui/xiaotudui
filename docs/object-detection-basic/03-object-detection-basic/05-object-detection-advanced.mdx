@@ -1,0 +1,46 @@
+---
+sidebar_position: 5
+---
+
+# 目标检测模型中的高级结构
+
+### Batch Normalization
+
+https://arxiv.org/pdf/1502.03167
+
+Batch Normalization 是 2015 年提出的一种归一化方法，主要用于解决深度神经网络中的内部协变量偏移问题。
+
+它的作用是为了让训练过程更加稳定。
+
+
+想要理解Batch Normalization，我们需要理解 Normalization （归一化）的作用。
+
+
+Normalizaion的作用，主要是为了消除不同特征固有的尺度差异。
+
+因为神经网络中的每一个参数都是依赖与输入的大小
+
+
+归一化的种类主要有：
+1. 0-1 归一化
+2. 均值方差归一化
+3. 正则化
+
+
+```python
+    random_image = torch.randint(0, 256, (1, 3, 10, 10), dtype=torch.float)
+    print(random_image)
+    m = nn.BatchNorm2d(3)
+    output = m(random_image)
+    print(output)
+```
+
+
+
+### Residual
+
+残差网络
+
+### Dropout
+
+丢弃层

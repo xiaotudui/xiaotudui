@@ -1,0 +1,358 @@
+---
+sidebar_position: 2
+---
+
+# 第一个目标检测模型
+
+一个完整的目标检测项目代码，可以按照目标检测部分分为：
+1. dataset。（加载数据集）
+2. model。（构建模型）
+3. train。（训练模型）
+4. utils (辅助代码)
+
+当然，我们还可以加上。
+4. eval。（评估模型）
+5. predict。（预测模型）
+
+
+我们现在来设计我们的第一个目标检测模型。
+
+首先，我们的输入是一张图片。
+但是图片的尺寸可能多变，最简单的办法，就是我们将任意大小的图片调整为固定大小的图片。
+
+那我们现在来考虑模型的输出，从前面数据集内容可以知道，
+
+在开始我们具体实现之前，我们先来讨论下我们想要的输入和输出。
+
+输入肯定就是任意大小的彩色图片。
+
+输出的话，正如我们前面所说的，就是输出感兴趣的目标和类别。
+具体到实现的话，希望输出的内容，有部分是用来表示类别的，有部分是来表示目标位置的。
+我们常见的表示分类的输出，就是one-hot编码。
+而目标位置的输出，我们可以用四个数字表示，就跟YOLO数据集中位置的标注格式一样。
+
+我们来举个例子，帮助大家理解。
+
+
+
+
+## 模型实现 （model.py)
+
+根据输入和输出，我们确定了模型的输入和输出。
+模型的输入是固定大小的图片，输出的是5个数字。分别代表（物体的中心x，物体的中心y，物体的宽度，物体的长度，物体的类别）。
+其实就是YOLO标注数据集的格式。
+
+那我们现在模型就很简单，就是一系列卷积层组合，然后最后加个全连接层，全连接层最后输出类别预测和边界框预测。
+
+模型比较简单。我们采用一系列卷积层来获得图片的特征信息。然后采用全连接层来构建我们想要的输出形式。至于如何从特征信息来转化到我们想要的输出形式，我们全权交给全连接去处理。
+
+
+
+```python
+import torch
+from torch import nn
+
+
+class TuduiModel(nn.Module):
+    def __init__(self, num_classes=20):
+        super(TuduiModel, self).__init__()
+        self.num_classes = num_classes
+
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+
+        # 全连接层将特征映射到输出
+        self.fc_layers = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(64 * 52 * 52, 512),
+            nn.ReLU(),
+            nn.Linear(512, num_classes + 4)  # num_classes个类别 + 4个边界框坐标
+        )
+
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = self.fc_layers(x)
+
+        # 分离类别预测和边界框预测
+        class_pred = x[:, :self.num_classes]  # 类别预测
+        box_pred = torch.sigmoid(x[:, self.num_classes:])  # 边界框预测 (归一化到0-1)
+
+        # 组合预测结果
+        output = torch.cat([class_pred, box_pred], dim=1)
+        return output
+
+
+if __name__ == '__main__':
+    # 测试代码
+    input = torch.randn(1, 3, 418, 418)
+    model = TuduiModel(16)
+    output = model(input)
+    print("Output shape:", output.shape)
+    print("Sample output:", output[0])
+
+```
+我们目前想要的输出形式非常的简单，就是类别预测和一个边界框预测。
+
+如果说我们想要输出类别预测和两个边界框预测。那么只需要将 `nn.Linear(512, num_classes + 4)` 修改为 `nn.Linear(512, num_classes + 8)` 即可。
+
+大家目前可以看到我们这个网络的一个局限性就是，我们对于一个图片只能预测一个物体的位置和类别。因为我们的输出形式只有类别和1个边界框（4个数字）。
+
+之后，我们会带大家去看看一些经典的YOLO模型是如何在输出形式后进行变化，进而解决这个问题的。
+
+这一部分，主要是想告诉大家，目标检测模型其实并不难，大家只需要对输出进行了解和设计，就可以实现自己的目标检测模型。
+
+
+
+## 数据集实现 （dataset.py)
+
+现在
+
+```python
+import os
+import torch
+from PIL import Image
+from torch.utils.data import Dataset
+
+
+class VOCDataset(Dataset):
+    def __init__(self, image_folder, label_folder, transform=None, num_classes=20):
+        self.image_folder = image_folder
+        self.label_folder = label_folder
+        self.transform = transform
+        self.num_classes = num_classes
+        self.img_filenames = [f for f in os.listdir(self.image_folder) if f.endswith(('.jpg', '.jpeg', '.png'))]
+
+    def __getitem__(self, index):
+        # 读取图像
+        img_filename = self.img_filenames[index]
+        img_path = os.path.join(self.image_folder, img_filename)
+        image = Image.open(img_path).convert('RGB')
+
+        # 应用图像变换
+        if self.transform:
+            image = self.transform(image)
+
+        # 读取标签文件
+        label_filename = os.path.splitext(img_filename)[0] + ".txt"
+        label_path = os.path.join(self.label_folder, label_filename)
+
+        # 初始化one-hot编码和边界框
+        class_label = torch.zeros(self.num_classes)
+        bbox = torch.zeros(4)  # [x, y, w, h]
+
+        if os.path.exists(label_path):
+            with open(label_path) as f:
+                line = f.readline().strip()
+                if line:
+                    values = list(map(float, line.split()))
+                    class_id = int(values[0])
+                    class_label[class_id] = 1.0  # one-hot编码
+                    bbox = torch.tensor(values[1:])  # 边界框坐标
+
+        # 组合标签
+        target = torch.cat([class_label, bbox])
+
+        return image, target
+
+    def __len__(self):
+        return len(self.img_filenames)
+
+
+if __name__ == '__main__':
+    dataset = VOCDataset(image_folder=r"C:\Dataset\VOCtrainval_06-Nov-2007\VOCdevkit\VOC2007\JPEGImages",
+                         label_folder=r"C:\Dataset\VOCtrainval_06-Nov-2007\VOCdevkit\VOC2007\YOLO")
+
+    print(dataset[0])
+```
+
+
+
+## 损失函数实现 （loss.py)
+
+```python
+import torch.nn as nn
+
+
+class DetectionLoss(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.class_criterion = nn.CrossEntropyLoss()  # 用于类别预测
+        self.box_criterion = nn.MSELoss()  # 用于边界框预测
+
+    def forward(self, predictions, targets):
+        # 分离类别预测和边界框预测
+        pred_classes = predictions[:, :20]  # 前20个是类别预测
+        pred_boxes = predictions[:, 20:]    # 后4个是边界框预测
+        
+        target_classes = targets[:, :20]    # 目标类别（one-hot）
+        target_boxes = targets[:, 20:]      # 目标边界框
+        
+        # 计算类别损失和边界框损失
+        class_loss = self.class_criterion(pred_classes, target_classes)
+        box_loss = self.box_criterion(pred_boxes, target_boxes)
+        
+        # 可以调整这些权重
+        total_loss = class_loss + box_loss
+        
+        return total_loss
+```
+
+## 训练流程实现 （train.py)
+```python
+import torch
+from torch.utils.data import DataLoader
+import torch.optim as optim
+from dataset import VOCDataset
+from model import TuduiModel
+from utils import get_transforms
+from loss import DetectionLoss
+from torch.utils.tensorboard import SummaryWriter
+
+def train_one_epoch(model, dataloader, criterion, optimizer, device):
+    model.train()
+    total_loss = 0
+    for batch_idx, (images, targets) in enumerate(dataloader):
+        images, targets = images.to(device), targets.to(device)
+        
+        # 前向传播
+        predictions = model(images)
+        
+        # 计算损失
+        loss = criterion(predictions, targets)
+        
+        # 反向传播
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        
+        total_loss += loss.item()
+        
+        if batch_idx % 100 == 0:
+            print(f"Batch {batch_idx}/{len(dataloader)}, Loss: {loss.item():.4f}")
+    
+    return total_loss / len(dataloader)
+
+
+def validate(model, dataloader, criterion, device):
+    model.eval()
+    total_loss = 0
+    with torch.no_grad():
+        for images, targets in dataloader:
+            images, targets = images.to(device), targets.to(device)
+            predictions = model(images)
+            loss = criterion(predictions, targets)
+            total_loss += loss.item()
+    
+    return total_loss / len(dataloader)
+
+
+def main():
+    # 设置设备
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
+    # 超参数
+    LEARNING_RATE = 1e-4
+    BATCH_SIZE = 16
+    NUM_EPOCHS = 100
+    
+    # 数据集路径
+    train_img_dir = r"C:\Dataset\VOCtrainval_06-Nov-2007\VOCdevkit\VOC2007\JPEGImages"
+    train_label_dir = r"C:\Dataset\VOCtrainval_06-Nov-2007\VOCdevkit\VOC2007\YOLO"
+    val_img_dir = r"C:\Dataset\VOCtrainval_06-Nov-2007\VOCdevkit\VOC2007\JPEGImages"
+    val_label_dir = r"C:\Dataset\VOCtrainval_06-Nov-2007\VOCdevkit\VOC2007\YOLO"
+
+    # 创建数据集和数据加载器
+    train_dataset = VOCDataset(
+        image_folder=train_img_dir,
+        label_folder=train_label_dir,
+        transform=get_transforms(train=True)
+    )
+    
+    val_dataset = VOCDataset(
+        image_folder=val_img_dir,
+        label_folder=val_label_dir,
+        transform=get_transforms(train=False)
+    )
+    
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        num_workers=0,
+        pin_memory=True
+    )
+    
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+        num_workers=0,
+        pin_memory=True
+    )
+    
+    # 创建模型
+    model = TuduiModel().to(device)
+    
+    # 定义损失函数和优化器
+    criterion = DetectionLoss()
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    
+    # 学习率调度器
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer,
+        mode='min',
+        factor=0.1,
+        patience=5,
+        verbose=True
+    )
+    
+    # Create TensorBoard writer
+    writer = SummaryWriter('runs/object_detection_experiment')
+    
+    # 训练循环
+    best_val_loss = float('inf')
+    for epoch in range(NUM_EPOCHS):
+        print(f"\nEpoch {epoch+1}/{NUM_EPOCHS}")
+        
+        # 训练
+        train_loss = train_one_epoch(
+            model, train_loader, criterion, optimizer, device
+        )
+        
+        # 验证
+        val_loss = validate(model, val_loader, criterion, device)
+        
+        # Add TensorBoard logging
+        writer.add_scalar('Loss/train', train_loss, epoch)
+        writer.add_scalar('Loss/val', val_loss, epoch)
+        writer.add_scalar('Learning_rate', optimizer.param_groups[0]['lr'], epoch)
+        
+        print(f"Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
+        
+        # 学习率调整
+        scheduler.step(val_loss)
+        
+        # 保存最佳模型
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), 'best_model.pth')
+            print("Saved best model!")
+    
+    # Close writer at the end
+    writer.close()
+
+
+if __name__ == "__main__":
+    main()
+```
