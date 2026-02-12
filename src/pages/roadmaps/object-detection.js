@@ -33,14 +33,14 @@ const stagesData = [
       videos: [
         {
           title: '查看视频教程',
-          link: ''
+          link: 'https://www.bilibili.com/video/BV19Z31z8ENH/'
         }
       ],
       docs: [
         { title: '查看文字教程', link: '/docs/object-detection-basic' },
       ],
       downloads: [
-        { title: '下载课程资料', link: '#' },
+        { title: '下载课程资料', link: 'https://pan.quark.cn/s/f6d9d842a498?pwd=md8V' },
       ]
     }
   },

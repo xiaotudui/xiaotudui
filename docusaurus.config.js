@@ -95,7 +95,7 @@ const config = {
             position: 'left'
           },
           {
-            'href': 'https://github.com/xiaotudui',
+            'href': 'https://space.bilibili.com/203989554',
             'position': 'right',
             'className': 'header-bilibili-link',
             'aria-label': 'Bilibili'
@@ -129,7 +129,7 @@ const config = {
             items: [
               {
                 label: 'Bilibili',
-                href: 'https://space.bilibili.com/'
+                href: 'https://space.bilibili.com/203989554'
               },
               {
                 label: '微信公众号',

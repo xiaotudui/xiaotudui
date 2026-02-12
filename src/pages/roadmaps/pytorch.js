@@ -41,14 +41,14 @@ const stagesData = [
       videos: [
         {
           title: '查看视频教程',
-          link: ''
+          link: 'https://www.bilibili.com/video/BV1hE411t7RN/'
         }
       ],
       docs: [
         { title: '查看文字教程', link: '/docs/pytorch-basic' },
       ],
       downloads: [
-        { title: '下载课程资料', link: '#' },
+        { title: '下载课程资料', link: 'https://pan.quark.cn/s/c59a198b005d' },
       ]
     }
   },
