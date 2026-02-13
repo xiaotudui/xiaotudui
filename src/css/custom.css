@@ -328,6 +328,62 @@ html[data-theme='dark'] .header-wechat-link::before {
   background-color: #07c160; /* 暗黑模式下也使用微信绿 */
 }
 
+/* 微信公众号弹窗样式 */
+.wechat-popover {
+  animation: wechat-popover-fade-in 0.2s ease-out;
+}
+
+@keyframes wechat-popover-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 底部页脚微信公众号弹窗：从下往上出现 */
+.wechat-footer-popover {
+  animation: wechat-footer-popover-fade-in 0.2s ease-out;
+}
+
+@keyframes wechat-footer-popover-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* 移动端：弹窗固定居中显示，避免偏左 */
+@media (max-width: 996px) {
+  .wechat-footer-popover {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    bottom: auto !important;
+    margin-bottom: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    animation: wechat-footer-popover-fade-in-mobile 0.2s ease-out;
+  }
+
+  @keyframes wechat-footer-popover-fade-in-mobile {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+}
+
 
 /*  Keyboard search keys */
 kbd {

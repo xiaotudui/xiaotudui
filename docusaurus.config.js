@@ -101,10 +101,12 @@ const config = {
             'aria-label': 'Bilibili'
           },
           {
-            'href': 'https://github.com/xiaotudui',
-            'position': 'right',
-            'className': 'header-wechat-link',
-            'aria-label': 'Wechat'
+            type: 'custom-wechatPopover',
+            position: 'right',
+            className: 'header-wechat-link',
+            'aria-label': '微信公众号',
+            accountName: '我是土堆',
+            qrcodeImage: '/img/wechat-qrcode.jpg'
           }
         ]
       },
@@ -133,7 +135,10 @@ const config = {
               },
               {
                 label: '微信公众号',
-                href: 'https://mp.weixin.qq.com/'
+                customType: 'wechat',
+                href: '#', // 用于 React key，实际渲染为弹窗
+                accountName: '我是土堆',
+                qrcodeImage: '/img/wechat-qrcode.jpg'
               }
             ]
           },
