@@ -152,8 +152,6 @@
 :root {
   /* Docusaurus vars */
   --prism-background-color: #edefff;
-  --ifm-footer-background-color: #fff;
-  --ifm-footer-link-color: #333;
   --ifm-code-font-size: 95%;
   --ifm-color-primary: #044cc1;
   --ifm-h1-font-size: 2.5rem;
@@ -179,7 +177,6 @@ html[data-theme='dark'] {
   --prism-background-color: #1d2144;
   --ifm-background-color: #14102c;
   --ifm-background-surface-color: #14102c;
-  --ifm-footer-link-color: #dadde1;
   --ifm-color-primary: #16ad8d;
   --ifm-menu-color-background-active: #ffffff1a;
   --menu-link-active: rgba(255, 255, 255, 0.1);

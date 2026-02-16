@@ -178,7 +178,7 @@ export default function TutorialsIndexPage() {
   });
 
   return (
-    <Layout title='知识库' description='土堆公会藏书馆'>
+    <Layout title='土堆教程' description='土堆教程'>
       <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0c1222] font-sans selection:bg-indigo-500/30">
         
         {/* --- Hero: 藏书馆大厅 --- */}

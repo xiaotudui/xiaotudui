@@ -56,7 +56,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/tree/main'
+            'https://github.com/xiaotudui/xiaotudui/tree/main'
         },
         blog: false,
         theme: {
@@ -143,7 +143,7 @@ const config = {
             ]
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} 我是土堆. 沪ICP备2024055345号`
+        copyright: `Copyright © ${new Date().getFullYear()} 我是土堆. 沪ICP备2024055345号. Built with Docusaurus.`
       },
       prism: {
         theme: prismThemes.github,
@@ -205,7 +205,7 @@ const config = {
         onUntruncatedBlogPosts: 'ignore',
         // Remove this to remove the "edit this page" links.
         editUrl:
-          'https://github.com/tree/main/',
+          'https://github.com/xiaotudui/xiaotudui/tree/main',
         remarkPlugins: [[require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }]]
       }
     ],
