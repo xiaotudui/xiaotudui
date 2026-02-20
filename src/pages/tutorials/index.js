@@ -28,7 +28,6 @@ const ArchiveKeeper = () => {
     const quotes = [
       "知识就是暴击率！",
       "这本卷轴记载了上古算法...",
-      "你需要更高的智力才能阅读这个。",
       "小心，别把咖啡洒在卷轴上！"
     ];
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);

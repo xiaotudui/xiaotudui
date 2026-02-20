@@ -423,7 +423,7 @@ div[class^='tableOfContents_'] {
   font-weight: 500;
 
   &::before {
-    content: 'Table of Contents';
+    content: '内容目录';
     font-size: 14px;
     font-weight: 500;
     margin-left: 15px;
@@ -434,7 +434,7 @@ div[class^='docItemContainer_'] article nav + div > button.clean-btn {
   color: #ffffff00;
 
   &::before {
-    content: 'Table of Contents';
+    content: '内容目录';
     color: var(--ifm-breadcrumb-color-active);
     font-weight: bold;
     margin-left: 5px;
