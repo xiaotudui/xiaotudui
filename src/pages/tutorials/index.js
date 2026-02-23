@@ -51,110 +51,156 @@ const ArchiveKeeper = () => {
   );
 };
 
-// --- 组件：知识任务卡片 ---
+// --- 组件：知识任务卡片（收藏卡牌风格）---
 const KnowledgeQuestCard = ({ tutorial, index }) => {
-  // 1. 映射配置
   const config = useMemo(() => {
-    // 模拟数据：根据 index 生成难度 (1-5)
-    // 实际项目中可以从 tutorial.difficulty 获取
-    const difficulty = (index % 5) + 1; 
-    
-    // 难度对应的颜色和标签
-    const difficultyConfig = {
-      1: { color: 'text-green-500', label: '入门' },
-      2: { color: 'text-blue-500', label: '简单' },
-      3: { color: 'text-yellow-500', label: '中等' },
-      4: { color: 'text-orange-500', label: '困难' },
-      5: { color: 'text-red-500', label: '地狱' },
-    }[difficulty] || { color: 'text-gray-500', label: '未知' };
+    const difficulty = (index % 5) + 1;
 
-    const map = {
-      '基础': { rank: 'C', color: 'text-green-600 dark:text-green-400', border: 'border-green-500', bg: 'bg-green-50 dark:bg-green-900/20', icon: Scroll },
-      '实战': { rank: 'A', color: 'text-purple-600 dark:text-purple-400', border: 'border-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20', icon: Sword },
-      '理论': { rank: 'B', color: 'text-blue-600 dark:text-blue-400', border: 'border-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20', icon: GraduationCap },
-      '框架': { rank: 'S', color: 'text-orange-500 dark:text-orange-400', border: 'border-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20', icon: Shield },
+    const diffConfig = {
+      1: { label: '入门', color: '#22c55e' },
+      2: { label: '简单', color: '#3b82f6' },
+      3: { label: '中等', color: '#eab308' },
+      4: { label: '困难', color: '#f97316' },
+      5: { label: '地狱', color: '#ef4444' },
+    }[difficulty];
+
+    const catMap = {
+      'PyTorch':  { icon: Flame,         colors: ['#f97316', '#ef4444'] },
+      '目标检测': { icon: Signal,        colors: ['#8b5cf6', '#a855f7'] },
+      '基础':     { icon: Scroll,        colors: ['#22c55e', '#14b8a6'] },
+      '实战':     { icon: Sword,         colors: ['#a855f7', '#d946ef'] },
+      '理论':     { icon: GraduationCap, colors: ['#3b82f6', '#6366f1'] },
+      '框架':     { icon: Shield,        colors: ['#f59e0b', '#f97316'] },
     };
-    
-    const style = map[tutorial.category] || map['基础'];
-    return { ...style, difficulty, diffInfo: difficultyConfig };
+
+    const cat = catMap[tutorial.category] || catMap['基础'];
+    return { ...cat, difficulty, diffInfo: diffConfig };
   }, [tutorial.category, index]);
 
   const Icon = config.icon;
   const xpReward = (parseInt(tutorial.duration) || 10) * 15;
+  const gradient = `linear-gradient(135deg, ${config.colors[0]}, ${config.colors[1]})`;
 
   return (
-    <Link
-      to={tutorial.link}
-      className="group relative block h-full no-underline hover:no-underline perspective-1000"
-    >
-      <div className="relative h-full transition-all duration-500 hover:-translate-y-2">
-        {/* 悬停时的背景光晕 */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-0 group-hover:opacity-40 transition duration-500"></div>
+    <Link to={tutorial.link} className="group relative block h-full no-underline hover:no-underline">
+      <div className="relative h-full transition-all duration-500 ease-out hover:-translate-y-3">
+        {/* 悬浮环境光 */}
+        <div
+          className="absolute -inset-3 rounded-3xl blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${config.colors[0]}25, transparent 70%)` }}
+        />
 
-        <div className="relative h-full bg-white dark:bg-[#1a1b26] rounded-xl border-2 border-gray-200 dark:border-gray-700 group-hover:border-blue-500/50 dark:group-hover:border-blue-500/50 p-6 overflow-hidden flex flex-col">
-          {/* 装饰：顶部贴纸效果 */}
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-yellow-200/80 dark:bg-yellow-900/50 shadow-sm rotate-1 z-10 opacity-80 backdrop-blur-sm"></div>
+        <div className="relative h-full bg-white dark:bg-[#1a1b26] rounded-2xl overflow-hidden flex flex-col shadow-[0_2px_15px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_15px_rgba(0,0,0,0.3)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] dark:group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500 border border-gray-100 dark:border-gray-800 group-hover:border-transparent">
 
-          {/* Header: 图标 & Rank */}
-          <div className="flex justify-between items-start mb-4">
-             <div className="w-14 h-14 rounded-xl flex items-center justify-center text-3xl shadow-sm border bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border-gray-100 dark:border-gray-700 group-hover:scale-105 transition-transform">
-                <Icon className={`w-7 h-7 ${config.color}`} />
-             </div>
+          {/* ═══ 顶部 Banner（支持自定义封面 / 默认渐变）═══ */}
+          <div className="relative h-36 overflow-hidden" style={!tutorial.cover ? { background: gradient } : undefined}>
+            {tutorial.cover ? (
+              <>
+                {/* 自定义封面图（bg-contain 确保完整显示） */}
+                <div
+                  className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-transform duration-700 group-hover:scale-110"
+                  style={{ backgroundImage: `url(${tutorial.cover})` }}
+                />
+              </>
+            ) : (
+              <>
+                {/* 默认：菱形纹理 */}
+                <div className="absolute inset-0 opacity-[0.07]" style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20z' fill='%23fff'/%3E%3C/svg%3E")`,
+                  backgroundSize: '24px 24px'
+                }} />
+                {/* 光效装饰 */}
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+                <div className="absolute -bottom-6 -left-6 w-28 h-28 bg-black/5 rounded-full blur-2xl" />
+                {/* 默认浮动图标 */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative">
+                    <div className="absolute -inset-8 bg-white/5 rounded-full blur-2xl group-hover:bg-white/15 group-hover:scale-150 transition-all duration-700" />
+                    <div className="relative w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                      <Icon className="w-9 h-9 text-white drop-shadow-lg" strokeWidth={1.5} />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
 
-             <div className={`flex flex-col items-center justify-center w-10 h-12 border-2 rounded-lg font-black text-xl shadow-sm ${config.color} ${config.bg} ${config.border} bg-opacity-30 border-opacity-30`}>
-                <span className="text-[8px] uppercase font-bold opacity-60 leading-none mt-1">Rank</span>
-                <span className="leading-none">{config.rank}</span>
-             </div>
+            {/* 悬浮光扫效果 */}
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
+
+            {/* 分类标签 - 左上 */}
+            <div className="absolute top-3 left-3">
+              <span className="px-2 py-0.5 rounded-md bg-black/20 backdrop-blur-sm text-white/90 text-[10px] font-bold tracking-wide border border-white/10">
+                {tutorial.category || '基础'}
+              </span>
+            </div>
+
+            {/* 底部弧形过渡 */}
+            <div className="absolute -bottom-px left-0 right-0">
+              <svg viewBox="0 0 400 20" preserveAspectRatio="none" className="w-full h-5 block">
+                <path d="M0,20 Q200,0 400,20 L400,20 L0,20 Z" className="fill-white dark:fill-[#1a1b26]" />
+              </svg>
+            </div>
           </div>
 
-          {/* Title & Desc */}
-          <div className="mb-6 flex-1 relative z-10">
-             <h3 className="text-xl font-bold mb-2 line-clamp-2 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-               {tutorial.title}
-             </h3>
-             <p className="text-sm line-clamp-2 text-gray-500 dark:text-gray-400">
-               {tutorial.description}
-             </p>
-          </div>
+          {/* ═══ 内容区 ═══ */}
+          <div className="flex-1 flex flex-col px-5 pb-5 pt-1">
+            <h3 className="text-lg font-black mb-1.5 line-clamp-2 text-gray-900 dark:text-gray-100">
+              {tutorial.title}
+            </h3>
+            <p className="text-[13px] line-clamp-2 text-gray-500 dark:text-gray-400 leading-relaxed flex-1 mb-4">
+              {tutorial.description}
+            </p>
 
-          {/* Stats: Difficulty & Rewards */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
-             
-             {/* 难度显示：使用骷髅头 + 文字标签 */}
-             <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-               <span className="text-[10px] font-bold text-gray-400">难度</span>
-               <div className="flex items-center gap-0.5">
-                 {/* 渲染骷髅头 */}
-                 {[...Array(5)].map((_, i) => (
-                   <Skull 
-                      key={i} 
-                      className={`w-3 h-3 ${i < config.difficulty ? config.diffInfo.color : 'text-gray-200 dark:text-gray-700'}`} 
-                      strokeWidth={3}
-                   />
-                 ))}
-               </div>
-             </div>
+            {/* 属性面板 */}
+            <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/50 space-y-2.5 mb-4 border border-gray-100 dark:border-gray-700/50">
+              {/* 难度 */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <Skull className="w-3 h-3 text-gray-400 dark:text-gray-500" strokeWidth={2.5} />
+                  <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 tracking-wide">难度</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-[3px]">
+                    {[...Array(5)].map((_, i) => {
+                      const isActive = i < config.difficulty;
+                      return (
+                        <div
+                          key={i}
+                          className={`w-5 h-1.5 rounded-full transition-all duration-500 ${isActive ? '' : 'bg-gray-200 dark:bg-gray-700'}`}
+                          style={isActive ? { background: config.diffInfo.color, transitionDelay: `${i * 60}ms` } : undefined}
+                        />
+                      );
+                    })}
+                  </div>
+                  <span className="text-[10px] font-bold min-w-[2em] text-right" style={{ color: config.diffInfo.color }}>
+                    {config.diffInfo.label}
+                  </span>
+                </div>
+              </div>
 
-             {/* 奖励显示 */}
-             <div className="flex items-center justify-end gap-2 p-2 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-               <Coins className="w-4 h-4 text-yellow-500" />
-               <span className="text-xs font-bold text-gray-700 dark:text-gray-300">
-                 {xpReward} XP
-               </span>
-             </div>
-          </div>
+              {/* 奖励 */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <Coins className="w-3 h-3 text-gray-400 dark:text-gray-500" strokeWidth={2.5} />
+                  <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 tracking-wide">奖励</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Star className="w-3 h-3 text-yellow-500 fill-yellow-400" />
+                  <span className="text-xs font-black text-yellow-600 dark:text-yellow-400">{xpReward} XP</span>
+                </div>
+              </div>
+            </div>
 
-          {/* Action Button */}
-          <div className="relative z-10 mt-auto">
-             <div className="w-full py-3 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-sm flex items-center justify-center gap-2 group-hover:bg-blue-600 dark:group-hover:bg-blue-400 dark:group-hover:text-white transition-all shadow-lg group-hover:shadow-blue-500/30">
-               <BookOpen className="w-4 h-4" />
-               研读卷轴
-               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-             </div>
+            {/* 行动按钮 */}
+            <div
+              className="w-full py-3 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 group-hover:scale-[1.02] mt-auto"
+              style={{ background: gradient, boxShadow: `0 4px 20px ${config.colors[0]}25` }}
+            >
+              <Flame className="w-4 h-4" />
+              开始阅读
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </div>
           </div>
-          
-          {/* 背景点阵纹理 */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
         </div>
       </div>
     </Link>

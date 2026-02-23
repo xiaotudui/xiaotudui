@@ -1,4 +1,5 @@
 // 教程文档数据
+// cover: 可选，自定义封面图路径（如 '/img/covers/pytorch.png'），不填则使用分类默认渐变+图标
 export const tutorials = [
   {
     id: 'pytorch-quick-start',
@@ -7,6 +8,7 @@ export const tutorials = [
     link: '/docs/pytorch-basic',
     category: 'PyTorch',
     type: 'doc',
+    cover: '/img/pytorch.svg',
   },
   {
     id: 'object-detection-quick-start',
@@ -15,5 +17,6 @@ export const tutorials = [
     link: '/docs/object-detection-basic',
     category: '目标检测',
     type: 'doc',
+    // cover: '/img/covers/object-detection.png',
   },
 ];
