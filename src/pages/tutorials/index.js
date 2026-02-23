@@ -14,21 +14,19 @@ import { tutorials } from '@site/src/data/tutorials-data';
 
 // --- 资源素材 ---
 const ASSETS = {
-  tower: '/img/game/Tower_Blue.png',
-  warrior: '/img/game/Warrior_Blue.gif',
+  arrow: '/img/game/arrow.gif',
 };
 
-// --- 组件：管理员 NPC ---
+// --- 组件：藏书馆守卫 NPC ---
 const ArchiveKeeper = () => {
   const [isTalking, setIsTalking] = useState(false);
-  const [quote, setQuote] = useState("欢迎来到公会藏书馆。");
+  const [quote, setQuote] = useState("这里汇集了所有教程，想学什么自己挑！");
   
   const handlePoke = () => {
     setIsTalking(true);
     const quotes = [
-      "知识就是暴击率！",
-      "这本卷轴记载了上古算法...",
-      "小心，别把咖啡洒在卷轴上！"
+      "有些教程是共创教程，投稿可以赚钱的！",
+      "不知道学什么？回首页看看主线任务吧。",
     ];
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
     setTimeout(() => setIsTalking(false), 3000);
@@ -36,16 +34,13 @@ const ArchiveKeeper = () => {
 
   return (
     <div className="relative h-64 w-full flex items-end justify-center perspective-1000 group/npc select-none">
-      <div className="absolute bottom-2 left-1/4 -translate-x-1/2 group-hover/npc:-translate-y-2 transition-transform duration-500">
-        <img src={ASSETS.tower} className="w-24 drop-shadow-2xl grayscale-[20%]" alt="Tower" />
-      </div>
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
         {/* 对话气泡 */}
-        <div className={`absolute -top-20 left-1/2 -translate-x-1/2 w-48 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-xl border-2 border-gray-200 dark:border-gray-700 transform transition-all duration-300 origin-bottom ${isTalking ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}`}>
-          <p className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed">{quote}</p>
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-gray-200 dark:border-gray-700 rotate-45"></div>
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom">
+          <span className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>
-        <img src={ASSETS.warrior} className="w-32 h-32 object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-200" style={{ imageRendering: 'pixelated' }} alt="Warrior" />
+        <img src={ASSETS.arrow} className="w-52 h-52 object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-200" style={{ imageRendering: 'pixelated' }} alt="Archive Keeper" />
       </div>
     </div>
   );
