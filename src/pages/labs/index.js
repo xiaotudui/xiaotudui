@@ -204,7 +204,7 @@ export default function LabIndexPage() {
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-[0.03] dark:opacity-[0.05]"></div>
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
           
-          <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 bg-cyan-50 dark:bg-cyan-900/30 border border-cyan-200 dark:border-cyan-800 text-cyan-600 dark:text-cyan-300 rounded-lg text-xs font-bold uppercase tracking-widest shadow-sm">
                 <Microscope className="w-3.5 h-3.5" />
@@ -226,7 +226,7 @@ export default function LabIndexPage() {
         </div>
 
         {/* --- Main Content: 工具展示区 --- */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-10 relative z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
           
           {/* 1. 响应式控制台 (Filter Console) */}
           <div className="bg-white/90 dark:bg-[#1e293b]/90 backdrop-blur-xl border-2 border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-4 mb-10 flex flex-col md:flex-row items-center justify-between gap-4">
