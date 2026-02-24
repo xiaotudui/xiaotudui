@@ -3,7 +3,7 @@
 export const tutorials = [
   {
     id: 'pytorch-quick-start',
-    title: 'PyTorch快速入门教程',
+    title: 'PyTorch 快速入门教程',
     description: '快速上手PyTorch深度学习框架',
     link: '/docs/pytorch-basic',
     category: 'PyTorch',
@@ -13,10 +13,10 @@ export const tutorials = [
   {
     id: 'object-detection-quick-start',
     title: '目标检测快速入门教程',
-    description: '快速上手目标检测，了解基本概念和API使用',
+    description: '快速上手目标检测，了解目标检测的基本概念和思路',
     link: '/docs/object-detection-basic',
     category: '目标检测',
     type: 'doc',
-    // cover: '/img/covers/object-detection.png',
+    cover: '/img/object-detection.png',
   },
 ];

@@ -326,11 +326,6 @@ export default function TutorialsIndexPage() {
                   <LayoutGrid className="w-4 h-4 text-gray-400" />
                   <span className="text-sm font-bold text-gray-500 dark:text-gray-400">Inventory ({filteredDocs.length})</span>
                 </div>
-                
-                <div className="flex items-center gap-2 px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-xs font-mono text-gray-500 dark:text-gray-400">
-                  <Gem className="w-3 h-3" />
-                  <span>SORT: RARITY</span>
-                </div>
              </div>
 
              {/* Grid */}
