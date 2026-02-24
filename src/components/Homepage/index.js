@@ -190,7 +190,7 @@ export default function Home() {
             {/* 左侧文字 */}
             <div className="text-center md:text-left">
               <div className="inline-block px-3 py-1 mb-4 bg-yellow-400 text-black font-black text-xs uppercase tracking-widest transform -rotate-2 shadow-sm">
-                TUDUI TUTORIALS
+                主线任务模式
               </div>
               <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
                 土堆教程

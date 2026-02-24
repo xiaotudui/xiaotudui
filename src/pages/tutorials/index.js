@@ -20,7 +20,7 @@ const ASSETS = {
 // --- 组件：藏书馆守卫 NPC ---
 const ArchiveKeeper = () => {
   const [isTalking, setIsTalking] = useState(false);
-  const [quote, setQuote] = useState("这里汇集了所有教程，想学什么自己挑！");
+  const [quote, setQuote] = useState("这里是自由关卡模式，可以根据自己的喜欢，自由学习不同的教程");
   
   const handlePoke = () => {
     setIsTalking(true);
@@ -229,17 +229,18 @@ export default function TutorialsIndexPage() {
           
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-300 rounded-lg text-xs font-bold uppercase tracking-widest shadow-sm">
-                <Crown className="w-3.5 h-3.5" />
-                Guild Archives Level 5
+              <div className="inline-block px-3 py-1 mb-4 bg-yellow-400 text-black font-black text-xs uppercase tracking-widest transform -rotate-2 shadow-sm">
+                自由关卡模式
               </div>
               <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
-                上古 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">知识卷轴</span>
+                土堆 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">教程</span>
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-400 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
-                这里存放着公会历代勇者积累的智慧。
+                在这里，选择感兴趣的历练任务，开始你的学习之旅。
                 <br/>
-                目前已收录 <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400 text-xl">{allDocs.length}</span> 份稀有技能书。
+                目前已收录 <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400 text-xl">{allDocs.length}</span> 份稀有历练任务。
+                <br/>
+                如果不知道从哪儿开始，可以试试主线任务模式 <Link to="/" className="text-indigo-600 dark:text-indigo-400 hover:underline">主线任务</Link>。
               </p>
             </div>
             <div className="relative h-64 flex items-end justify-center">
