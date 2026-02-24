@@ -18,8 +18,8 @@ const ASSETS = {
 
 // --- 随机台词库 ---
 const WARRIOR_QUOTES = [
-  "学习中遇到问题，随时可以找我的主人解决。他的联系方式在页面顶部和底部。",
-  "那个 Transformer 模型... 它是汽车人变的吗？",
+  "主线任务模式会按学习路线推进，更适合从零开始系统入门。",
+  "如果你已经知道自己想学什么，可以去自由关卡模式按兴趣学习。",
   "不要忘了保存你的 Checkpoint，那是你的存档点！",
   "听说掌握了 PyTorch，就能操纵名为“张量”的魔法。",
   "保持耐心，训练模型和训练剑术一样，都需要时间。",
@@ -27,7 +27,7 @@ const WARRIOR_QUOTES = [
 
 // --- 组件：公会接待员 (Hero 交互区) ---
 const GuildMaster = () => {
-  const [quote, setQuote] = useState("欢迎来到土堆教程！准备好开始新的学习征程了吗？");
+  const [quote, setQuote] = useState("这里是主线任务模式：按路线循序学习，入门更轻松。");
   const [isTalking, setIsTalking] = useState(false);
 
   const handlePoke = () => {
@@ -46,8 +46,8 @@ const GuildMaster = () => {
       </div>
 
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
-        <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-64 bg-white dark:bg-gray-800 p-3 rounded-2xl shadow-xl border-2 border-blue-500/20 transform transition-all duration-300 ${isTalking ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-100 translate-y-2'}`}>
-          <p className="text-sm font-medium text-gray-700 dark:text-gray-200 text-center leading-relaxed">
+        <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-64 bg-white dark:bg-gray-800 px-3 py-2 rounded-2xl shadow-xl border-2 border-blue-500/20 transform transition-all duration-300 ${isTalking ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-100 translate-y-2'}`}>
+          <p className="mb-0 text-sm font-medium text-gray-700 dark:text-gray-200 text-center leading-relaxed">
             "{quote}"
           </p>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-blue-500/20 transform rotate-45"></div>
@@ -189,7 +189,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             {/* 左侧文字 */}
             <div className="text-center md:text-left">
-              <div className="inline-block px-3 py-1 mb-4 bg-yellow-400 text-black font-black text-xs uppercase tracking-widest transform -rotate-2 shadow-sm">
+              <div className="inline-block px-5 py-2 mb-5 bg-yellow-400 text-black font-black text-sm md:text-base uppercase tracking-wider transform -rotate-1 shadow-sm rounded-md">
                 主线任务模式
               </div>
               <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
@@ -197,9 +197,8 @@ export default function Home() {
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
                 入门难？不知道先学哪个？<br/>
-                跟随 <span className="font-bold text-gray-900 dark:text-white">主线任务（学习路线）</span>，体验不一样的学习旅程。
+                全新的 <span className="font-bold text-gray-900 dark:text-white">主线任务模式</span>，带你体验不一样的学习旅程。
               </p>
-              
             </div>
 
             {/* 右侧互动区域 */}

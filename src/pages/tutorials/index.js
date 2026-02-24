@@ -25,8 +25,8 @@ const ArchiveKeeper = () => {
   const handlePoke = () => {
     setIsTalking(true);
     const quotes = [
-      "有些教程是共创教程，投稿可以赚钱的！",
-      "不知道学什么？回首页看看主线任务吧。",
+      "主线任务模式强调学习路径，这里更适合按兴趣自由探索。",
+      "如果你不确定学什么，建议先去首页走主线任务模式。",
     ];
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
     setTimeout(() => setIsTalking(false), 3000);
@@ -36,7 +36,7 @@ const ArchiveKeeper = () => {
     <div className="relative h-64 w-full flex items-end justify-center perspective-1000 group/npc select-none">
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
         {/* 对话气泡 */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom">
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom">
           <span className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>
@@ -229,14 +229,14 @@ export default function TutorialsIndexPage() {
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="text-center md:text-left">
-              <div className="inline-block px-3 py-1 mb-4 bg-yellow-400 text-black font-black text-xs uppercase tracking-widest transform -rotate-2 shadow-sm">
+              <div className="inline-block px-5 py-2 mb-5 bg-yellow-400 text-black font-black text-sm md:text-base uppercase tracking-wider transform -rotate-1 shadow-sm rounded-md">
                 自由关卡模式
               </div>
               <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
                 土堆 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">教程</span>
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-400 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
-                在这里，选择感兴趣的历练任务，开始你的学习之旅。
+                自由关卡模式：你可以按兴趣自由挑选教程，不受主线顺序限制。
                 <br/>
                 目前已收录 <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400 text-xl">{allDocs.length}</span> 份稀有历练任务。
                 <br/>
@@ -251,7 +251,6 @@ export default function TutorialsIndexPage() {
 
         {/* --- Main Content: 物品栏区域 --- */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
-          
           {/* 1. 响应式过滤器 (Responsive Loot Filter) */}
           <div className="bg-white/90 dark:bg-[#1e293b]/90 backdrop-blur-xl border-2 border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-4 mb-10 flex flex-col md:flex-row items-center justify-between gap-4">
              
