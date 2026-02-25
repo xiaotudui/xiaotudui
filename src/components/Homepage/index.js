@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { 
   ArrowRight, Shield, Swords, Star, Coins, Scroll, Lock, 
-  Sparkles, Zap, Map, Compass, HelpCircle
+  Sparkles, Zap
 } from 'lucide-react';
 import { roadmaps } from '@site/src/data/roadmap-data';
 
@@ -17,7 +17,7 @@ const ASSETS = {
 };
 
 // --- 随机台词库 ---
-const WARRIOR_QUOTES = [
+const MAINLINE_QUOTES = [
   "主线任务模式会按学习路线推进，更适合从零开始系统入门。",
   "如果你已经知道自己想学什么，可以去自由关卡模式按兴趣学习。",
   "不要忘了保存你的 Checkpoint，那是你的存档点！",
@@ -33,7 +33,7 @@ const GuildMaster = () => {
   const handlePoke = () => {
     setIsTalking(false);
     setTimeout(() => {
-      const randomQuote = WARRIOR_QUOTES[Math.floor(Math.random() * WARRIOR_QUOTES.length)];
+      const randomQuote = MAINLINE_QUOTES[Math.floor(Math.random() * MAINLINE_QUOTES.length)];
       setQuote(randomQuote);
       setIsTalking(true);
     }, 50);
@@ -175,6 +175,16 @@ const QuestCard = ({ roadmap, index }) => {
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
 
+  const handleScrollToRoadmaps = () => {
+    const roadmapsSection = document.getElementById('roadmaps');
+    if (!roadmapsSection) return;
+    const top = roadmapsSection.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({
+      top: Math.max(top, 0),
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <Layout
       title={`${siteConfig.title}`}
@@ -196,9 +206,26 @@ export default function Home() {
                 土堆教程
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
-                入门难？不知道先学哪个？<br/>
-                全新的 <span className="font-bold text-gray-900 dark:text-white">主线任务模式</span>，带你体验不一样的学习旅程。
+                入门难？不知道先学哪个？<br />
+                选择 <span className="font-bold text-gray-900 dark:text-white">主线任务模式</span>，按路线循序学习，稳步提升。
               </p>
+
+              <div className="flex flex-col sm:flex-row items-center md:items-start gap-3 mb-4">
+                <button
+                  type="button"
+                  onClick={handleScrollToRoadmaps}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold no-underline hover:no-underline hover:opacity-90 transition-opacity min-w-[200px]"
+                >
+                  开始主线任务
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <Link
+                  to="/tutorials"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-bold no-underline hover:no-underline hover:border-gray-900 dark:hover:border-white transition-colors min-w-[200px]"
+                >
+                  我想自由学习
+                </Link>
+              </div>
             </div>
 
             {/* 右侧互动区域 */}
@@ -212,7 +239,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
           
           {/* 2. 主线任务板 (Roadmaps) */}
-          <section id="roadmaps">
+          <section id="roadmaps" className="scroll-mt-28">
             <div className="flex items-center gap-4 mb-10">
               <div className="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/20 transform -rotate-3">
                 <Shield className="w-7 h-7 text-white" />

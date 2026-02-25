@@ -20,7 +20,7 @@ const ASSETS = {
 // --- 组件：藏书馆守卫 NPC ---
 const ArchiveKeeper = () => {
   const [isTalking, setIsTalking] = useState(false);
-  const [quote, setQuote] = useState("这里是自由关卡模式，可以根据自己的喜欢，自由学习不同的教程");
+  const [quote, setQuote] = useState("这里是自由关卡模式，可以根据自己的兴趣，自由学习不同的教程");
   
   const handlePoke = () => {
     setIsTalking(true);
@@ -229,16 +229,16 @@ export default function TutorialsIndexPage() {
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="text-center md:text-left">
-              <div className="inline-block px-5 py-2 mb-5 bg-yellow-400 text-black font-black text-sm md:text-base uppercase tracking-wider transform -rotate-1 shadow-sm rounded-md">
+              <div className="inline-block px-5 py-2 mb-5 bg-blue-400 text-black font-black text-sm md:text-base uppercase tracking-wider transform -rotate-1 shadow-sm rounded-md">
                 自由关卡模式
               </div>
               <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
                 土堆 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">教程</span>
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-400 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
-                自由关卡模式：你可以按兴趣自由挑选教程，不受主线顺序限制。
+                自由关卡模式：你可以按兴趣自由学习。
                 <br/>
-                目前已收录 <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400 text-xl">{allDocs.length}</span> 份稀有历练任务。
+                目前已收录 <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400 text-xl">{allDocs.length}</span> 份教程。
                 <br/>
                 如果不知道从哪儿开始，可以试试主线任务模式 <Link to="/" className="text-indigo-600 dark:text-indigo-400 hover:underline">主线任务</Link>。
               </p>
