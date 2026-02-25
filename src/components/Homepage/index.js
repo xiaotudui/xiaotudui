@@ -18,16 +18,13 @@ const ASSETS = {
 
 // --- 随机台词库 ---
 const MAINLINE_QUOTES = [
-  "主线任务模式会按学习路线推进，更适合从零开始系统入门。",
+  "学习路线模式会按学习路线推进，更适合从零开始系统入门。",
   "如果你已经知道自己想学什么，可以去自由关卡模式按兴趣学习。",
-  "不要忘了保存你的 Checkpoint，那是你的存档点！",
-  "听说掌握了 PyTorch，就能操纵名为“张量”的魔法。",
-  "保持耐心，训练模型和训练剑术一样，都需要时间。",
 ];
 
 // --- 组件：公会接待员 (Hero 交互区) ---
 const GuildMaster = () => {
-  const [quote, setQuote] = useState("这里是主线任务模式：按路线循序学习，入门更轻松。");
+  const [quote, setQuote] = useState("这里是学习路线模式：按路线循序学习，入门更轻松。");
   const [isTalking, setIsTalking] = useState(false);
 
   const handlePoke = () => {
@@ -68,7 +65,7 @@ const GuildMaster = () => {
   );
 };
 
-// --- 组件：主线任务卡片 (Quest Card) ---
+// --- 组件：学习路线卡片 (Quest Card) ---
 const QuestCard = ({ roadmap, index }) => {
   const isLocked = roadmap.comingSoon;
   const rank = isLocked ? '?' : (roadmap.rank || ['S', 'A', 'B'][index % 3]);
@@ -200,14 +197,14 @@ export default function Home() {
             {/* 左侧文字 */}
             <div className="text-center md:text-left">
               <div className="inline-block px-5 py-2 mb-5 bg-yellow-400 text-black font-black text-sm md:text-base uppercase tracking-wider transform -rotate-1 shadow-sm rounded-md">
-                主线任务模式
+                学习路线模式
               </div>
               <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
                 土堆教程
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
                 入门难？不知道先学哪个？<br />
-                选择 <span className="font-bold text-gray-900 dark:text-white">主线任务模式</span>，按路线循序学习，稳步提升。
+                选择 <span className="font-bold text-gray-900 dark:text-white">学习路线模式</span>，按路线循序学习，稳步提升。
               </p>
 
               <div className="flex flex-col sm:flex-row items-center md:items-start gap-3 mb-4">
@@ -216,7 +213,7 @@ export default function Home() {
                   onClick={handleScrollToRoadmaps}
                   className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold no-underline hover:no-underline hover:opacity-90 transition-opacity min-w-[220px]"
                 >
-                  开始主线任务
+                  开始学习路线
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -232,7 +229,7 @@ export default function Home() {
         {/* 主内容容器 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
           
-          {/* 2. 主线任务板 (Roadmaps) */}
+          {/* 2. 学习路线板 (Roadmaps) */}
           <section id="roadmaps" className="scroll-mt-28">
             <div className="flex items-center gap-4 mb-10">
               <div className="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/20 transform -rotate-3">
@@ -240,7 +237,7 @@ export default function Home() {
               </div>
               <div>
                  <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
-                   主线任务
+                   学习路线
                  </h2>
                  <p className="text-sm text-gray-500 font-medium mt-1">
                    精心设计的学习路线，大师成长之路。

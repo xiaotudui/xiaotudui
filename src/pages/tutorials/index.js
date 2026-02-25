@@ -20,13 +20,13 @@ const ASSETS = {
 // --- 组件：藏书馆守卫 NPC ---
 const ArchiveKeeper = () => {
   const [isTalking, setIsTalking] = useState(false);
-  const [quote, setQuote] = useState("这里是自由关卡模式，可以根据自己的兴趣，自由学习不同的教程");
+  const [quote, setQuote] = useState("这里是自由教程模式，可以根据自己的兴趣，自由学习不同的教程");
   
   const handlePoke = () => {
     setIsTalking(true);
     const quotes = [
-      "主线任务模式强调学习路径，这里更适合按兴趣自由探索。",
-      "如果你不确定学什么，建议先去首页走主线任务模式。",
+      "学习路线模式强调学习路径，这里更适合按兴趣自由探索。",
+      "如果你不确定学什么，可以去首页用学习路线模式来学习。",
     ];
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
     setTimeout(() => setIsTalking(false), 3000);
@@ -230,7 +230,7 @@ export default function TutorialsIndexPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="text-center md:text-left">
               <div className="inline-block px-5 py-2 mb-5 bg-blue-400 text-black font-black text-sm md:text-base uppercase tracking-wider transform -rotate-1 shadow-sm rounded-md">
-                自由关卡模式
+                自由教程模式
               </div>
               <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
                 土堆 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">教程</span>
@@ -245,7 +245,7 @@ export default function TutorialsIndexPage() {
                   <Map className="w-4 h-4 text-indigo-600 dark:text-indigo-300" />
                 </div>
                 <p className="mb-0 text-sm text-gray-700 dark:text-gray-300 font-semibold leading-relaxed">
-                  不知道先学哪个？先去首页按学习路线图学习会更轻松。
+                  不知道先学哪个？可以去首页按照 学习路线图 进行学习。
                 </p>
                 <Link
                   to="/#roadmaps"
@@ -333,13 +333,6 @@ export default function TutorialsIndexPage() {
 
           {/* 2. 物品网格 (Inventory Grid) */}
           <div className="min-h-[400px] mb-20">
-             {/* 状态栏 */}
-             <div className="flex items-center justify-between mb-6 px-1">
-                <div className="flex items-center gap-2">
-                  <LayoutGrid className="w-4 h-4 text-gray-400" />
-                  <span className="text-sm font-bold text-gray-500 dark:text-gray-400">Inventory ({filteredDocs.length})</span>
-                </div>
-             </div>
 
              {/* Grid */}
              {filteredDocs.length > 0 ? (
