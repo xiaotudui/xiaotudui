@@ -236,12 +236,25 @@ export default function TutorialsIndexPage() {
                 土堆 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">教程</span>
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-400 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
-                自由关卡模式：你可以按兴趣自由学习。
+                你可以按自己的兴趣自由学习想学的教程。
                 <br/>
                 目前已收录 <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400 text-xl">{allDocs.length}</span> 份教程。
-                <br/>
-                如果不知道从哪儿开始，可以试试主线任务模式 <Link to="/" className="text-indigo-600 dark:text-indigo-400 hover:underline">主线任务</Link>。
               </p>
+              <div className="mt-5 inline-flex max-w-lg items-center gap-3 rounded-xl border border-indigo-200/80 dark:border-indigo-800 bg-indigo-50/80 dark:bg-indigo-900/20 px-4 py-3 shadow-sm">
+                <div className="w-9 h-9 shrink-0 rounded-lg bg-white dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-700 flex items-center justify-center">
+                  <Map className="w-4 h-4 text-indigo-600 dark:text-indigo-300" />
+                </div>
+                <p className="mb-0 text-sm text-gray-700 dark:text-gray-300 font-semibold leading-relaxed">
+                  不知道先学哪个？先去首页按学习路线图学习会更轻松。
+                </p>
+                <Link
+                  to="/#roadmaps"
+                  className="shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white text-xs font-black px-3 py-2 no-underline hover:no-underline transition-colors"
+                >
+                  查看路线图
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
             <div className="relative h-64 flex items-end justify-center">
                <ArchiveKeeper />

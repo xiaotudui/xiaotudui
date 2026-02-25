@@ -214,17 +214,11 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={handleScrollToRoadmaps}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold no-underline hover:no-underline hover:opacity-90 transition-opacity min-w-[200px]"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold no-underline hover:no-underline hover:opacity-90 transition-opacity min-w-[220px]"
                 >
                   开始主线任务
                   <ArrowRight className="w-4 h-4" />
                 </button>
-                <Link
-                  to="/tutorials"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-bold no-underline hover:no-underline hover:border-gray-900 dark:hover:border-white transition-colors min-w-[200px]"
-                >
-                  我想自由学习
-                </Link>
               </div>
             </div>
 
