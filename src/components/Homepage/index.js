@@ -118,26 +118,6 @@ const QuestCard = ({ roadmap, index }) => {
              </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-6">
-             <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-               <Swords className="w-4 h-4 text-gray-400" />
-               <div className="flex gap-0.5">
-                 {[...Array(5)].map((_, i) => (
-                   <Star 
-                      key={i} 
-                      className={`w-3 h-3 ${i < difficulty ? (isLocked ? 'text-gray-300' : 'text-yellow-400 fill-yellow-400') : 'text-gray-200 dark:text-gray-700'}`} 
-                   />
-                 ))}
-               </div>
-             </div>
-             <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-               <Coins className="w-4 h-4 text-yellow-500" />
-               <span className={`text-xs font-bold ${isLocked ? 'text-gray-400' : 'text-gray-700 dark:text-gray-300'}`}>
-                 {xpReward} XP
-               </span>
-             </div>
-          </div>
-
           <div className="relative z-10">
              {isLocked ? (
                <div className="w-full py-3 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700 flex items-center justify-center gap-2 text-gray-400 font-bold text-sm bg-gray-50 dark:bg-gray-800/30">
@@ -204,7 +184,7 @@ export default function Home() {
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
                 入门难？不知道先学哪个？<br />
-                选择 <span className="font-bold text-gray-900 dark:text-white">学习路线模式</span>，按路线循序学习，稳步提升。
+                按照 <span className="font-bold text-gray-900 dark:text-white">学习路线</span>，循序学习，稳步提升。
               </p>
 
               <div className="flex flex-col sm:flex-row items-center md:items-start gap-3 mb-4">
