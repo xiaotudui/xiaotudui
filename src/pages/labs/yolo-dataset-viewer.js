@@ -185,7 +185,6 @@ const YOLODatasetView = () => {
               COCO128
             </a>
           </p>
-          <p className="text-gray-700 dark:text-gray-300">4. 如果大家在为科研或就业做学习准备，想找大佬1V1带的话，可以戳 <a href="https://www.bilibili.com/opus/633620127076581396" className="text-blue-600 dark:text-blue-400 hover:underline"> 给大家推荐大佬1对1带着学</a>，我们合作很久了，很靠谱的大牛团队 </p>
         </div>
 
         {/* 文件上传区域 */}

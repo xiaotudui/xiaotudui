@@ -17,6 +17,30 @@ const ASSETS = {
   arrow: '/img/game/arrow.gif',
 };
 
+const DIFFICULTY_LEVELS = {
+  1: { label: '入门', color: '#22c55e' },
+  2: { label: '中等', color: '#3b82f6' },
+  3: { label: '困难', color: '#ef4444' },
+};
+
+const normalizeDifficulty = (difficulty, fallback = 1) => {
+  if (typeof difficulty === 'number') {
+    return Math.min(3, Math.max(1, Math.round(difficulty)));
+  }
+
+  const difficultyMap = {
+    入门: 1,
+    简单: 1,
+    初级: 1,
+    中等: 2,
+    进阶: 2,
+    困难: 3,
+    高级: 3,
+  };
+
+  return difficultyMap[difficulty] || fallback;
+};
+
 // --- 组件：藏书馆守卫 NPC ---
 const ArchiveKeeper = () => {
   const [isTalking, setIsTalking] = useState(false);
@@ -49,15 +73,9 @@ const ArchiveKeeper = () => {
 // --- 组件：知识任务卡片（收藏卡牌风格）---
 const KnowledgeQuestCard = ({ tutorial, index }) => {
   const config = useMemo(() => {
-    const difficulty = (index % 5) + 1;
-
-    const diffConfig = {
-      1: { label: '入门', color: '#22c55e' },
-      2: { label: '简单', color: '#3b82f6' },
-      3: { label: '中等', color: '#eab308' },
-      4: { label: '困难', color: '#f97316' },
-      5: { label: '地狱', color: '#ef4444' },
-    }[difficulty];
+    const fallbackDifficulty = (index % 3) + 1;
+    const difficulty = normalizeDifficulty(tutorial.difficulty, fallbackDifficulty);
+    const diffInfo = DIFFICULTY_LEVELS[difficulty];
 
     const catMap = {
       'PyTorch':  { icon: Flame,         colors: ['#f97316', '#ef4444'] },
@@ -69,8 +87,8 @@ const KnowledgeQuestCard = ({ tutorial, index }) => {
     };
 
     const cat = catMap[tutorial.category] || catMap['基础'];
-    return { ...cat, difficulty, diffInfo: diffConfig };
-  }, [tutorial.category, index]);
+    return { ...cat, difficulty, diffInfo };
+  }, [tutorial.category, tutorial.difficulty, index]);
 
   const Icon = config.icon;
   const xpReward = (parseInt(tutorial.duration) || 10) * 15;
@@ -156,7 +174,7 @@ const KnowledgeQuestCard = ({ tutorial, index }) => {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="flex gap-[3px]">
-                    {[...Array(5)].map((_, i) => {
+                    {[...Array(3)].map((_, i) => {
                       const isActive = i < config.difficulty;
                       return (
                         <div
@@ -173,17 +191,6 @@ const KnowledgeQuestCard = ({ tutorial, index }) => {
                 </div>
               </div>
 
-              {/* 奖励 */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <Coins className="w-3 h-3 text-gray-400 dark:text-gray-500" strokeWidth={2.5} />
-                  <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 tracking-wide">奖励</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Star className="w-3 h-3 text-yellow-500 fill-yellow-400" />
-                  <span className="text-xs font-black text-yellow-600 dark:text-yellow-400">{xpReward} XP</span>
-                </div>
-              </div>
             </div>
 
             {/* 行动按钮 */}
@@ -318,7 +325,7 @@ export default function TutorialsIndexPage() {
                 </div>
                 <input
                   type="text"
-                  placeholder="搜索技能名称..."
+                  placeholder="搜索教程名称..."
                   className="block w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
