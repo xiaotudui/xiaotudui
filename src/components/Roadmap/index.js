@@ -179,11 +179,6 @@ const StageRow = ({ stage, index, isLast, assets }) => {
   const imgSrc = isAssetPath(assetKey) ? assetKey : (assets || DEFAULT_ASSETS)[assetKey];
   const isPixelArt = typeof assetKey === 'string' && (assetKey === 'warrior' || /\.gif$/i.test(assetKey));
 
-  // 右侧票根图片 - 支持自定义 stubAsset（可以是 assets key 或直接图片路径）
-  const stubKey = stage.stubAsset || 'warrior';
-  const stubSrc = isAssetPath(stubKey) ? stubKey : (assets || DEFAULT_ASSETS)[stubKey];
-  const isStubPixelArt = typeof stubKey === 'string' && (stubKey === 'warrior' || /\.gif$/i.test(stubKey));
-
   return (
     <div className={`relative ${isLast ? '' : 'mb-10'}`}>
       <div className={`relative group/ticket mx-2 sm:mx-0 transition-transform duration-300 ${isLocked ? '' : 'hover:-translate-y-1'}`}>
@@ -204,23 +199,21 @@ const StageRow = ({ stage, index, isLast, assets }) => {
             <div className={`flex flex-col lg:flex-row ${isLocked ? 'grayscale opacity-60' : ''}`}>
 
               {/* ===== 左侧：素材 + 状态 ===== */}
-              <div className="lg:w-32 shrink-0 flex flex-row lg:flex-col items-center justify-center gap-3 p-4 sm:p-5 lg:py-6 relative overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20z' fill='%23000' fill-opacity='.4'/%3E%3C/svg%3E")`,
-                  backgroundSize: '20px 20px'
-                }} />
+              <div className="lg:w-40 shrink-0 flex flex-row lg:flex-col items-center justify-center gap-4 p-5 sm:p-6 lg:py-7 relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/60 dark:from-gray-900 dark:via-gray-900 dark:to-slate-800/70">
+                <div className="absolute inset-0 border-r border-slate-100/80 dark:border-slate-700/60" />
+                <div className="absolute -top-10 -left-10 w-28 h-28 rounded-full bg-blue-200/20 dark:bg-blue-400/10 blur-2xl" />
 
                 {/* 素材图标 */}
-                <div className="relative z-10 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
+                <div className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center">
                   {imgSrc ? (
                     <img
                       src={imgSrc}
                       alt="stage-asset"
-                      className={`w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-lg transition-transform duration-500 ${isLocked ? '' : 'group-hover/ticket:scale-110'}`}
+                      className={`w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-lg transition-transform duration-500 ${isLocked ? '' : 'group-hover/ticket:scale-110'}`}
                       style={{ imageRendering: isPixelArt ? 'pixelated' : 'auto' }}
                     />
                   ) : (
-                    <Sparkles className="w-8 h-8 text-gray-300 dark:text-gray-600" />
+                    <Sparkles className="w-10 h-10 text-gray-300 dark:text-gray-600" />
                   )}
                 </div>
 
@@ -278,40 +271,6 @@ const StageRow = ({ stage, index, isLast, assets }) => {
                 )}
               </div>
 
-              {/* ===== 撕边分割线 ===== */}
-              <div className="hidden lg:flex relative w-0 items-stretch">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 w-8 h-8 rounded-full bg-[var(--ifm-background-color)]" />
-                <div className="absolute top-4 bottom-4 left-1/2 -translate-x-1/2 w-px border-l-2 border-dashed border-gray-200 dark:border-gray-700" />
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20 w-8 h-8 rounded-full bg-[var(--ifm-background-color)]" />
-              </div>
-              <div className="lg:hidden relative h-0 mx-6">
-                <div className="absolute top-1/2 -left-6 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-[var(--ifm-background-color)]" />
-                <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 h-px border-t-2 border-dashed border-gray-200 dark:border-gray-700" />
-                <div className="absolute top-1/2 -right-6 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-[var(--ifm-background-color)]" />
-              </div>
-
-              {/* ===== 右侧：票根 - 自定义图片 ===== */}
-              <div className="w-full lg:w-44 shrink-0 relative flex flex-col items-center justify-center py-8 sm:py-10 lg:py-6 px-6 lg:px-4 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-sky-100/80 via-sky-50/60 to-emerald-50/80 dark:from-gray-800/80 dark:via-gray-850/60 dark:to-gray-900/80" />
-                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-emerald-200/30 to-transparent dark:from-emerald-900/15" />
-
-                <div className="relative z-10 flex items-center justify-center">
-                  {stubSrc ? (
-                    <img
-                      src={stubSrc}
-                      alt=""
-                      className={`w-24 h-24 sm:w-28 sm:h-28 lg:w-24 lg:h-24 object-contain drop-shadow-lg transition-transform duration-500 ${isLocked ? 'opacity-50' : 'group-hover/ticket:scale-110 group-hover/ticket:-translate-y-1'}`}
-                      style={{ imageRendering: isStubPixelArt ? 'pixelated' : 'auto' }}
-                    />
-                  ) : (
-                    <Sparkles className="w-12 h-12 text-gray-300" />
-                  )}
-                </div>
-
-                <div className="mt-3 text-[7px] font-bold text-gray-400/50 dark:text-gray-600/50 tracking-[0.2em] uppercase text-center relative z-10">
-                  Admit One
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -322,7 +281,7 @@ const StageRow = ({ stage, index, isLast, assets }) => {
 
 export function RoadmapStages({ stages, assets = DEFAULT_ASSETS }) {
   return (
-    <div className="max-w-5xl mx-auto px-2 sm:px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
       {stages.map((stage, index) => (
         <StageRow
           key={stage.id || index}
@@ -361,62 +320,62 @@ export function RoadmapHeader({
     <div className="relative border-b border-gray-200 dark:border-gray-800 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-white dark:from-[#111827] dark:via-[#0f172a] dark:to-[#0f172a]" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="pt-6 pb-8 md:pb-10">
-          <nav className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-500 mb-5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="pt-8 pb-10 md:pt-10 md:pb-12">
+          <nav className="flex items-center gap-1.5 text-base text-gray-400 dark:text-gray-500 mb-6">
             <Link to="/" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors no-underline">
               首页
             </Link>
-            <ChevronRight size={14} className="shrink-0" />
+            <ChevronRight size={16} className="shrink-0" />
             <Link to="/#roadmaps" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors no-underline">
               学习路线
             </Link>
-            <ChevronRight size={14} className="shrink-0" />
+            <ChevronRight size={16} className="shrink-0" />
             <span className="text-gray-700 dark:text-gray-200 font-medium truncate">{title}</span>
           </nav>
 
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-5 mb-5">
             {icon && (
-              <div className="shrink-0 w-12 h-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center">
+              <div className="shrink-0 w-14 h-14 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center">
                 {/\.(svg|png|jpg|jpeg|webp|gif)$/i.test(icon) ? (
-                  <img src={icon} alt="" className="w-8 h-8 object-contain" />
+                  <img src={icon} alt="" className="w-9 h-9 object-contain" />
                 ) : (
-                  <span className="text-2xl">{icon}</span>
+                  <span className="text-3xl">{icon}</span>
                 )}
               </div>
             )}
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
               {title}
             </h1>
           </div>
 
           {subtitle && (
-            <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
               {subtitle}
             </p>
           )}
 
           {(totalStages > 0 || description) && (
-            <div className="mt-3 flex flex-wrap items-center gap-2">
+            <div className="mt-4 flex flex-wrap items-center gap-2.5">
               {totalStages > 0 && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                  <Target size={12} />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                  <Target size={14} />
                   {totalStages} 个阶段
                 </span>
               )}
               {releasedStages > 0 && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   {releasedStages} 个已发布
                 </span>
               )}
               {totalStages > releasedStages && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
                   {totalStages - releasedStages} 个待更新
                 </span>
               )}
               {description && (
-                <span className="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
+                <span className="text-sm text-gray-400 dark:text-gray-500 hidden sm:inline">
                   · {description}
                 </span>
               )}
@@ -424,20 +383,20 @@ export function RoadmapHeader({
           )}
 
           {rewards.length > 0 && (
-            <div className="mt-5">
-              <div className="flex items-center gap-1.5 mb-2.5">
-                <Trophy size={13} className="text-amber-500" />
-                <span className="text-xs font-bold text-gray-700 dark:text-gray-200">完成路线后你将获得</span>
+            <div className="mt-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Trophy size={15} className="text-amber-500" />
+                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">完成路线后你将获得</span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {rewards.map((reward, idx) => {
                   const label = typeof reward === 'string' ? reward : reward.label;
                   return (
                     <span
                       key={label}
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${REWARD_STYLES[idx % REWARD_STYLES.length]}`}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold border ${REWARD_STYLES[idx % REWARD_STYLES.length]}`}
                     >
-                      <span className="text-sm leading-none">{REWARD_ICONS[idx % REWARD_ICONS.length]}</span>
+                      <span className="text-base leading-none">{REWARD_ICONS[idx % REWARD_ICONS.length]}</span>
                       {label}
                     </span>
                   );
