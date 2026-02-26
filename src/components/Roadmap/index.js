@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import {
-  ArrowLeft, Cloud,
+  Cloud, ChevronRight,
   Play, BookOpen, CheckCircle2, Lock,
-  Sparkles, MapPin
+  Sparkles, Zap, Trophy, Target
 } from 'lucide-react';
 
 // --- 默认游戏素材 ---
@@ -340,61 +340,111 @@ export function RoadmapHeader({
   title,
   subtitle,
   description,
-  backLink = '/',
-  backText = '返回首页',
-  assets = DEFAULT_ASSETS,
-  mascot = 'warrior'
+  icon,
+  stages = [],
+  rewards = [],
 }) {
+  const totalStages = stages.length;
+  const releasedStages = stages.filter(s => s.status === 'released' || s.status === 'ongoing').length;
+
+  const REWARD_ICONS = ['⚡', '🧠', '🎯', '🛠', '🚀', '✨'];
+  const REWARD_STYLES = [
+    'border-blue-200 bg-blue-50/70 text-blue-700 dark:border-blue-800/50 dark:bg-blue-900/25 dark:text-blue-300',
+    'border-violet-200 bg-violet-50/70 text-violet-700 dark:border-violet-800/50 dark:bg-violet-900/25 dark:text-violet-300',
+    'border-emerald-200 bg-emerald-50/70 text-emerald-700 dark:border-emerald-800/50 dark:bg-emerald-900/25 dark:text-emerald-300',
+    'border-amber-200 bg-amber-50/70 text-amber-700 dark:border-amber-800/50 dark:bg-amber-900/25 dark:text-amber-300',
+    'border-cyan-200 bg-cyan-50/70 text-cyan-700 dark:border-cyan-800/50 dark:bg-cyan-900/25 dark:text-cyan-300',
+    'border-rose-200 bg-rose-50/70 text-rose-700 dark:border-rose-800/50 dark:bg-rose-900/25 dark:text-rose-300',
+  ];
+
   return (
-    <div className="relative bg-white dark:bg-[#151b2d] border-b border-gray-200 dark:border-gray-800 pt-8 pb-12 overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-        backgroundSize: '24px 24px'
-      }} />
+    <div className="relative border-b border-gray-200 dark:border-gray-800 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-white dark:from-[#111827] dark:via-[#0f172a] dark:to-[#0f172a]" />
 
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <Link to={backLink} className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-blue-600 transition-colors mb-8 no-underline group">
-          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-colors">
-            <ArrowLeft size={16} />
-          </div>
-          {backText}
-        </Link>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="pt-6 pb-8 md:pb-10">
+          <nav className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-500 mb-5">
+            <Link to="/" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors no-underline">
+              首页
+            </Link>
+            <ChevronRight size={14} className="shrink-0" />
+            <Link to="/#roadmaps" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors no-underline">
+              学习路线
+            </Link>
+            <ChevronRight size={14} className="shrink-0" />
+            <span className="text-gray-700 dark:text-gray-200 font-medium truncate">{title}</span>
+          </nav>
 
-        <div className="flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider border border-blue-100 dark:border-blue-800">
-                Roadmap
-              </span>
-              <span className="flex items-center gap-1 text-xs font-bold text-gray-400">
-                <MapPin size={12} />
-                Tudui Academy
-              </span>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
-              {title}
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 text-3xl md:text-5xl mt-2">
-                {subtitle}
-              </span>
-            </h1>
-
-            {description && (
-              <p className="text-lg text-gray-600 dark:text-gray-400 font-medium leading-relaxed border-l-4 border-blue-200 dark:border-blue-800 pl-4">
-                {description}
-              </p>
+          <div className="flex items-center gap-4 mb-4">
+            {icon && (
+              <div className="shrink-0 w-12 h-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center">
+                {/\.(svg|png|jpg|jpeg|webp|gif)$/i.test(icon) ? (
+                  <img src={icon} alt="" className="w-8 h-8 object-contain" />
+                ) : (
+                  <span className="text-2xl">{icon}</span>
+                )}
+              </div>
             )}
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+              {title}
+            </h1>
           </div>
 
-          <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-2xl animate-pulse" />
-            <img
-              src={assets[mascot] || DEFAULT_ASSETS[mascot]}
-              alt="mascot"
-              className="relative w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-              style={{ imageRendering: 'pixelated' }}
-            />
-          </div>
+          {subtitle && (
+            <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
+              {subtitle}
+            </p>
+          )}
+
+          {(totalStages > 0 || description) && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              {totalStages > 0 && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                  <Target size={12} />
+                  {totalStages} 个阶段
+                </span>
+              )}
+              {releasedStages > 0 && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  {releasedStages} 个已发布
+                </span>
+              )}
+              {totalStages > releasedStages && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
+                  {totalStages - releasedStages} 个待更新
+                </span>
+              )}
+              {description && (
+                <span className="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
+                  · {description}
+                </span>
+              )}
+            </div>
+          )}
+
+          {rewards.length > 0 && (
+            <div className="mt-5">
+              <div className="flex items-center gap-1.5 mb-2.5">
+                <Trophy size={13} className="text-amber-500" />
+                <span className="text-xs font-bold text-gray-700 dark:text-gray-200">完成路线后你将获得</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {rewards.map((reward, idx) => {
+                  const label = typeof reward === 'string' ? reward : reward.label;
+                  return (
+                    <span
+                      key={label}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${REWARD_STYLES[idx % REWARD_STYLES.length]}`}
+                    >
+                      <span className="text-sm leading-none">{REWARD_ICONS[idx % REWARD_ICONS.length]}</span>
+                      {label}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -83,11 +83,10 @@ export default function PyTorchRoadmapPage() {
     <Layout title="PyTorch学习路线" description="游戏化的目标检测学习路线图">
       <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0c1222] font-sans">
         <RoadmapHeader
-          title="PyTorch"
-          subtitle="冒险之旅"
-          description="从 Python 基础到深度学习，再到目标检测实战，一步步解锁关卡，成为目标检测领域的冒险家！"
-          backLink="/"
-          backText="返回首页"
+          title="PyTorch 学习路线"
+          subtitle="从 Python 基础到 PyTorch 实战，循序渐进掌握深度学习核心技能。"
+          icon="/img/pytorch.svg"
+          stages={stagesData}
         />
         <div className="max-w-6xl mx-auto px-4 py-12">
           <RoadmapStages stages={stagesData} />
