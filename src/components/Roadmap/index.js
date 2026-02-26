@@ -3,7 +3,7 @@ import Link from '@docusaurus/Link';
 import {
   Cloud, ChevronRight,
   Play, BookOpen, CheckCircle2, Lock,
-  Sparkles, Zap, Trophy, Target
+  Sparkles, Target
 } from 'lucide-react';
 
 // --- 默认游戏素材 ---
@@ -298,23 +298,11 @@ export function RoadmapStages({ stages, assets = DEFAULT_ASSETS }) {
 export function RoadmapHeader({
   title,
   subtitle,
-  description,
   icon,
   stages = [],
-  rewards = [],
 }) {
   const totalStages = stages.length;
   const releasedStages = stages.filter(s => s.status === 'released' || s.status === 'ongoing').length;
-
-  const REWARD_ICONS = ['⚡', '🧠', '🎯', '🛠', '🚀', '✨'];
-  const REWARD_STYLES = [
-    'border-blue-200 bg-blue-50/70 text-blue-700 dark:border-blue-800/50 dark:bg-blue-900/25 dark:text-blue-300',
-    'border-violet-200 bg-violet-50/70 text-violet-700 dark:border-violet-800/50 dark:bg-violet-900/25 dark:text-violet-300',
-    'border-emerald-200 bg-emerald-50/70 text-emerald-700 dark:border-emerald-800/50 dark:bg-emerald-900/25 dark:text-emerald-300',
-    'border-amber-200 bg-amber-50/70 text-amber-700 dark:border-amber-800/50 dark:bg-amber-900/25 dark:text-amber-300',
-    'border-cyan-200 bg-cyan-50/70 text-cyan-700 dark:border-cyan-800/50 dark:bg-cyan-900/25 dark:text-cyan-300',
-    'border-rose-200 bg-rose-50/70 text-rose-700 dark:border-rose-800/50 dark:bg-rose-900/25 dark:text-rose-300',
-  ];
 
   return (
     <div className="relative border-b border-gray-200 dark:border-gray-800 overflow-hidden">
@@ -322,86 +310,56 @@ export function RoadmapHeader({
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="pt-8 pb-10 md:pt-10 md:pb-12">
-          <nav className="flex items-center gap-1.5 text-base text-gray-400 dark:text-gray-500 mb-6">
-            <Link to="/" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors no-underline">
+          <nav className="flex items-center gap-1.5 text-sm sm:text-base text-gray-400 dark:text-gray-500 mb-7">
+            <Link to="/" className="inline-flex items-center px-1.5 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 transition-all no-underline">
               首页
             </Link>
             <ChevronRight size={16} className="shrink-0" />
-            <Link to="/#roadmaps" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors no-underline">
+            <Link to="/#roadmaps" className="inline-flex items-center px-1.5 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 transition-all no-underline">
               学习路线
             </Link>
             <ChevronRight size={16} className="shrink-0" />
-            <span className="text-gray-700 dark:text-gray-200 font-medium truncate">{title}</span>
+            <span className="text-gray-700 dark:text-gray-200 font-semibold truncate">{title}</span>
           </nav>
 
-          <div className="flex items-center gap-5 mb-5">
+          <div className="flex items-center gap-5 mb-5 min-h-16">
             {icon && (
-              <div className="shrink-0 w-14 h-14 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center">
+              <div className="shrink-0 w-14 h-14 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 bg-gradient-to-br from-white via-slate-50 to-blue-50/50 dark:from-gray-800 dark:via-gray-800 dark:to-slate-700/70 shadow-sm ring-1 ring-black/5 dark:ring-white/10 grid place-items-center">
                 {/\.(svg|png|jpg|jpeg|webp|gif)$/i.test(icon) ? (
-                  <img src={icon} alt="" className="w-9 h-9 object-contain" />
+                  <img src={icon} alt="" className="w-9 h-9 object-contain drop-shadow-sm" />
                 ) : (
                   <span className="text-3xl">{icon}</span>
                 )}
               </div>
             )}
-            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-none">
               {title}
             </h1>
           </div>
 
           {subtitle && (
-            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl mb-1">
               {subtitle}
             </p>
           )}
 
-          {(totalStages > 0 || description) && (
-            <div className="mt-4 flex flex-wrap items-center gap-2.5">
-              {totalStages > 0 && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                  <Target size={14} />
-                  {totalStages} 个阶段
-                </span>
-              )}
+          {totalStages > 0 && (
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold bg-white/90 text-gray-700 dark:bg-gray-800/90 dark:text-gray-300 ring-1 ring-gray-200 dark:ring-gray-700 shadow-sm">
+                <Target size={14} />
+                {totalStages} 个阶段
+              </span>
               {releasedStages > 0 && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/35 dark:text-emerald-300 ring-1 ring-emerald-200/80 dark:ring-emerald-800/70 shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   {releasedStages} 个已发布
                 </span>
               )}
               {totalStages > releasedStages && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold bg-amber-50 text-amber-700 dark:bg-amber-900/35 dark:text-amber-300 ring-1 ring-amber-200/80 dark:ring-amber-800/70 shadow-sm">
                   {totalStages - releasedStages} 个待更新
                 </span>
               )}
-              {description && (
-                <span className="text-sm text-gray-400 dark:text-gray-500 hidden sm:inline">
-                  · {description}
-                </span>
-              )}
-            </div>
-          )}
-
-          {rewards.length > 0 && (
-            <div className="mt-6">
-              <div className="flex items-center gap-2 mb-3">
-                <Trophy size={15} className="text-amber-500" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">完成路线后你将获得</span>
-              </div>
-              <div className="flex flex-wrap gap-2.5">
-                {rewards.map((reward, idx) => {
-                  const label = typeof reward === 'string' ? reward : reward.label;
-                  return (
-                    <span
-                      key={label}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold border ${REWARD_STYLES[idx % REWARD_STYLES.length]}`}
-                    >
-                      <span className="text-base leading-none">{REWARD_ICONS[idx % REWARD_ICONS.length]}</span>
-                      {label}
-                    </span>
-                  );
-                })}
-              </div>
             </div>
           )}
         </div>
