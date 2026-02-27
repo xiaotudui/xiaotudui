@@ -12,8 +12,7 @@ import { toolsData, getAllCategories } from '../../data/labs-data';
 
 // --- 资源素材 ---
 const ASSETS = {
-  tower: '/img/game/Tower_Blue.png',
-  warrior: '/img/game/Warrior_Blue.gif',
+  houseBuild: '/img/game/house-build.gif',
 };
 
 const isAssetPath = (v) =>
@@ -21,37 +20,28 @@ const isAssetPath = (v) =>
 
 // --- 组件：首席工程师 NPC ---
 const LabKeeper = () => {
-  const [isTalking, setIsTalking] = useState(false);
-  const [quote, setQuote] = useState("欢迎来到研发中心。");
+  const [quote, setQuote] = useState("这里汇聚各种工具帮助你更好的学习");
   
   const handlePoke = () => {
-    setIsTalking(true);
     const quotes = [
       "小心！那个原型机还不稳定！",
       "想要更高效的工具？你来对地方了。",
-      "科学与魔法的界限... 其实很模糊。",
-      "别碰那个红色的按钮... 算了，碰吧。",
-      "正在校准 YOLO 数据集的精度..."
+      "科学与魔法的界限其实很模糊。",
+      "别碰那个红色的按钮，算了，碰吧。",
+      "正在校准 YOLO 数据集的精度。"
     ];
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
-    setTimeout(() => setIsTalking(false), 3000);
   };
 
   return (
     <div className="relative h-64 w-full flex items-end justify-center perspective-1000 group/npc select-none">
-      <div className="absolute bottom-2 left-1/4 -translate-x-1/2 group-hover/npc:-translate-y-2 transition-transform duration-500">
-        <img src={ASSETS.tower} className="w-24 drop-shadow-2xl grayscale-[20%] hue-rotate-180" alt="Tower" />
-      </div>
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
         {/* 对话气泡 */}
-        <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-52 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-xl border-2 border-cyan-200 dark:border-cyan-800 transform transition-all duration-300 origin-bottom ${isTalking ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}`}>
-          <p className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed font-mono">
-            <span className="text-cyan-600 dark:text-cyan-400 mr-1">&gt;</span>
-            {quote}
-          </p>
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-cyan-200 dark:border-cyan-800 rotate-45"></div>
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom opacity-100 scale-100">
+          <span className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>
-        <img src={ASSETS.warrior} className="w-32 h-32 object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-200" style={{ imageRendering: 'pixelated' }} alt="Engineer" />
+        <img src={ASSETS.houseBuild} className="w-52 h-52 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-200" style={{ imageRendering: 'pixelated' }} alt="House Build" />
       </div>
     </div>
   );
