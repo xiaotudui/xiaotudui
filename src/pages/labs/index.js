@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import { 
   Search, Filter, FlaskConical, Hammer, 
   Settings, Wrench, Search as SearchIcon, 
-  X, Crown, LayoutGrid, Gem, Zap, 
+  X, Crown, LayoutGrid, Gem, 
   ArrowRight, Microscope, Box, Menu, 
   Cpu, Sparkles, ExternalLink
 } from 'lucide-react';
@@ -15,6 +15,9 @@ const ASSETS = {
   tower: '/img/game/Tower_Blue.png',
   warrior: '/img/game/Warrior_Blue.gif',
 };
+
+const isAssetPath = (v) =>
+  typeof v === 'string' && (v.startsWith('/') || v.startsWith('http') || /\.(svg|png|jpg|jpeg|gif|webp)$/i.test(v));
 
 // --- 组件：首席工程师 NPC ---
 const LabKeeper = () => {
@@ -55,120 +58,99 @@ const LabKeeper = () => {
 };
 
 // --- 组件：工程道具卡片 (Lab Tool Card) ---
-const ToolCard = ({ tool, index }) => {
-  // 映射配置：给不同的工具赋予不同的“稀有度”外观
+const ToolCard = ({ tool }) => {
   const config = useMemo(() => {
-    // 根据 ID 或 index 模拟不同的科技等级
-    const techLevel = (index % 3) + 1; // 1: Mk.I, 2: Mk.II, 3: Mk.III
-    
-    // 映射样式
     const map = {
-      '目标检测': { 
-        rank: 'SR', 
-        label: 'DETECTION',
-        color: 'text-cyan-600 dark:text-cyan-400', 
-        border: 'border-cyan-500', 
-        bg: 'bg-cyan-50 dark:bg-cyan-900/20', 
-        shadow: 'group-hover:shadow-cyan-500/30',
-        icon: Box
+      '目标检测': {
+        icon: Box,
+        colors: ['#0891b2', '#3b82f6']
       },
-      // 默认样式
-      'default': { 
-        rank: 'R', 
-        label: 'UTILITY',
-        color: 'text-blue-600 dark:text-blue-400', 
-        border: 'border-blue-500', 
-        bg: 'bg-blue-50 dark:bg-blue-900/20', 
-        shadow: 'group-hover:shadow-blue-500/30',
-        icon: Wrench
-      }
+      default: {
+        icon: Wrench,
+        colors: ['#2563eb', '#6366f1']
+      },
     };
-    
-    const style = map[tool.category] || map['default'];
-    return { ...style, techLevel };
-  }, [tool.category, index]);
+
+    return map[tool.category] || map.default;
+  }, [tool.category]);
 
   const Icon = config.icon;
+  const gradient = `linear-gradient(135deg, ${config.colors[0]}, ${config.colors[1]})`;
 
   return (
-    <Link
-      to={tool.link}
-      className="group relative block h-full no-underline hover:no-underline perspective-1000"
-    >
-      <div className="relative h-full transition-all duration-500 hover:-translate-y-2">
-        {/* 悬停光晕 */}
-        <div className={`absolute -inset-0.5 rounded-2xl blur opacity-0 group-hover:opacity-40 transition duration-500 bg-gradient-to-r from-cyan-500 to-blue-600`}></div>
+    <Link to={tool.link} className="group relative block h-full no-underline hover:no-underline">
+      <div className="relative h-full transition-all duration-500 ease-out hover:-translate-y-3">
+        <div
+          className="absolute -inset-3 rounded-3xl blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${config.colors[0]}25, transparent 70%)` }}
+        />
 
-        <div className="relative h-full bg-white dark:bg-[#1a1b26] rounded-xl border-2 border-gray-200 dark:border-gray-700 group-hover:border-cyan-500/50 dark:group-hover:border-cyan-500/50 p-6 overflow-hidden flex flex-col">
-          
-          {/* 装饰：科技角标 */}
-          <div className="absolute top-0 right-0 p-2">
-             {tool.isNew && (
-               <div className="flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800 animate-pulse">
-                 <Sparkles className="w-3 h-3" />
-                 NEW
-               </div>
-             )}
-          </div>
+        <div className="relative h-full bg-white dark:bg-[#1a1b26] rounded-2xl overflow-hidden flex flex-col shadow-[0_2px_15px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_15px_rgba(0,0,0,0.3)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] dark:group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500 border border-gray-100 dark:border-gray-800 group-hover:border-transparent">
+          <div className="relative h-32 overflow-hidden" style={{ background: gradient }}>
+            <div
+              className="absolute inset-0 opacity-[0.07]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20z' fill='%23fff'/%3E%3C/svg%3E")`,
+                backgroundSize: '24px 24px'
+              }}
+            />
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+            <div className="absolute -bottom-6 -left-6 w-28 h-28 bg-black/5 rounded-full blur-2xl" />
 
-          {/* Header: 图标 & 等级 */}
-          <div className="flex justify-between items-start mb-5">
-             {/* 左侧大图标容器 */}
-             <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-3xl shadow-sm border bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border-gray-100 dark:border-gray-700 group-hover:scale-110 transition-transform relative overflow-hidden`}>
-                {/* 如果数据中有 icon (emoji)，优先显示，否则显示默认 Icon */}
-                {tool.icon ? (
-                  <span className="z-10">{tool.icon}</span>
-                ) : (
-                  <Icon className={`w-7 h-7 z-10 ${config.color}`} />
-                )}
-                {/* 背景网格装饰 */}
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:4px_4px]"></div>
-             </div>
-
-             {/* 右侧：型号标识 */}
-             <div className="flex flex-col items-end">
-                <div className={`text-[10px] font-black uppercase tracking-widest ${config.color} opacity-60`}>
-                  MODEL
+            <div className="absolute inset-0 flex items-center justify-center">
+              {isAssetPath(tool.icon) ? (
+                <div className="w-24 h-24 flex items-center justify-center px-2">
+                  <img
+                    src={tool.icon}
+                    alt={`${tool.title} icon`}
+                    className="max-w-full max-h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <div className="text-xl font-mono font-bold text-gray-300 dark:text-gray-600 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors">
-                  MK.{config.techLevel}
+              ) : tool.icon ? (
+                <span className="text-5xl drop-shadow-lg">{tool.icon}</span>
+              ) : (
+                <div className="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                  <Icon className="w-9 h-9 text-white drop-shadow-lg" strokeWidth={1.5} />
                 </div>
-             </div>
-          </div>
-
-          {/* Title & Desc */}
-          <div className="mb-6 flex-1 relative z-10">
-             <h3 className="text-xl font-bold mb-2 line-clamp-2 text-gray-900 dark:text-gray-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-               {tool.title}
-             </h3>
-             <p className="text-sm line-clamp-3 text-gray-500 dark:text-gray-400 leading-relaxed">
-               {tool.description}
-             </p>
-          </div>
-
-          {/* Tech Stats Bar (装饰性) */}
-          <div className="flex items-center gap-2 mb-4 opacity-70">
-            <div className="h-1.5 flex-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-               <div className={`h-full ${config.bg.replace('/20','')} w-[${(index % 4 + 2) * 20}%] rounded-full`}></div>
+              )}
             </div>
-            <span className="text-[10px] font-mono text-gray-400">SYS.READY</span>
+
+            <div className="absolute top-3 left-3">
+              <span className="px-2 py-0.5 rounded-md bg-black/20 backdrop-blur-sm text-white/90 text-[10px] font-bold tracking-wide border border-white/10">
+                {tool.category || '工具'}
+              </span>
+            </div>
+
+            {tool.isNew && (
+              <div className="absolute top-3 right-3">
+                <span className="px-2 py-0.5 rounded-md bg-red-500/85 text-white text-[10px] font-black tracking-wide">
+                  NEW
+                </span>
+              </div>
+            )}
+
+            <div className="absolute -bottom-px left-0 right-0">
+              <svg viewBox="0 0 400 20" preserveAspectRatio="none" className="w-full h-5 block">
+                <path d="M0,20 Q200,0 400,20 L400,20 L0,20 Z" className="fill-white dark:fill-[#1a1b26]" />
+              </svg>
+            </div>
           </div>
 
-          {/* Action Button */}
-          <div className="relative z-10 mt-auto">
-             <div className="w-full py-3 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-sm flex items-center justify-center gap-2 group-hover:bg-cyan-600 dark:group-hover:bg-cyan-400 dark:group-hover:text-white transition-all shadow-lg group-hover:shadow-cyan-500/30">
-               <Cpu className="w-4 h-4" />
-               启动工具
-               <ExternalLink className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 transition-transform" />
-             </div>
-          </div>
-          
-          {/* 背景装饰：电路板纹理 */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-               style={{ 
-                 backgroundImage: `linear-gradient(0deg, transparent 24%, #e5e7eb 25%, #e5e7eb 26%, transparent 27%, transparent 74%, #e5e7eb 75%, #e5e7eb 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, #e5e7eb 25%, #e5e7eb 26%, transparent 27%, transparent 74%, #e5e7eb 75%, #e5e7eb 76%, transparent 77%, transparent)`,
-                 backgroundSize: '30px 30px'
-               }}>
+          <div className="flex-1 flex flex-col px-5 pb-5 pt-3">
+            <h3 className="text-lg font-black mb-1.5 line-clamp-2 text-gray-900 dark:text-gray-100">
+              {tool.title}
+            </h3>
+            <p className="text-[13px] line-clamp-2 text-gray-500 dark:text-gray-400 leading-relaxed flex-1 mb-4">
+              {tool.description}
+            </p>
+
+            <div
+              className="w-full py-3 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 group-hover:scale-[1.02] mt-auto"
+              style={{ background: gradient, boxShadow: `0 4px 20px ${config.colors[0]}25` }}
+            >
+              启动工具
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </div>
           </div>
         </div>
       </div>
@@ -208,7 +190,7 @@ export default function LabIndexPage() {
             <div className="text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 bg-cyan-50 dark:bg-cyan-900/30 border border-cyan-200 dark:border-cyan-800 text-cyan-600 dark:text-cyan-300 rounded-lg text-xs font-bold uppercase tracking-widest shadow-sm">
                 <Microscope className="w-3.5 h-3.5" />
-                R&D Department Level 3
+                TUDUI LAB
               </div>
               <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
                 土堆 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">实验室</span>
@@ -301,7 +283,7 @@ export default function LabIndexPage() {
              {filteredTools.length > 0 ? (
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                  {filteredTools.map((tool, idx) => (
-                   <ToolCard key={tool.id} tool={tool} index={idx} />
+                  <ToolCard key={tool.id} tool={tool} />
                  ))}
                </div>
              ) : (
