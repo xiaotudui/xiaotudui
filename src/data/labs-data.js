@@ -5,7 +5,7 @@ export const toolsData = [
     title: 'YOLO数据集查看器',
     description: '可视化 YOLO 格式的目标检测数据集',
     category: '目标检测',
-    icon: '🎯',
+    icon: '/img/yolo.svg',
     color: 'bg-blue-500',
     link: '/labs/yolo-dataset-viewer',
     isNew: false
@@ -15,7 +15,7 @@ export const toolsData = [
     title: 'COCO数据集查看器',
     description: '可视化 COCO 格式的目标检测数据集',
     category: '目标检测',
-    icon: '📊',
+    icon: '/img/coco.png',
     color: 'bg-green-500',
     link: '/labs/coco-dataset-viewer',
     isNew: false

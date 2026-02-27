@@ -24,11 +24,7 @@ const LabKeeper = () => {
   
   const handlePoke = () => {
     const quotes = [
-      "小心！那个原型机还不稳定！",
-      "想要更高效的工具？你来对地方了。",
-      "科学与魔法的界限其实很模糊。",
-      "别碰那个红色的按钮，算了，碰吧。",
-      "正在校准 YOLO 数据集的精度。"
+      "有些工具是自制的，有些工具是外面的。",
     ];
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   };
@@ -37,7 +33,7 @@ const LabKeeper = () => {
     <div className="relative h-64 w-full flex items-end justify-center perspective-1000 group/npc select-none">
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
         {/* 对话气泡 */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom opacity-100 scale-100">
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom opacity-100 scale-100">
           <span className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>
