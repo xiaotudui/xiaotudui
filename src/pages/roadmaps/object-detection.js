@@ -100,7 +100,8 @@ export default function ObjectDetectionRoadmapPage() {
       <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0c1222] font-sans">
         <RoadmapHeader
           title="目标检测学习路线"
-          subtitle="从 PyTorch 基础到检测模型实战，系统掌握目标检测全流程。"
+          subtitle={`目标检测是应用很广的领域。总而言之，就是我们想让模型帮我们找到我们感兴趣的目标。
+          这个学习路线，帮助你从零开始了解目标检测，并帮助你应用到自己的课题/工作中。`}
           icon="/img/object-detection.png"
           stages={stagesData}
         />

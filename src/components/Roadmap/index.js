@@ -311,24 +311,13 @@ export function RoadmapHeader({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <div className={`relative pt-8 md:pt-10 md:pb-12 ${icon ? 'pb-28 sm:pb-32' : 'pb-10'}`}>
           <div className="relative z-10">
-            <nav className="flex items-center gap-1.5 text-sm sm:text-base text-gray-400 dark:text-gray-500 mb-7">
-              <Link to="/" className="inline-flex items-center px-1.5 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 transition-all no-underline">
-                首页
-              </Link>
-              <ChevronRight size={16} className="shrink-0" />
-              <Link to="/#roadmaps" className="inline-flex items-center px-1.5 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 transition-all no-underline">
-                学习路线
-              </Link>
-              <ChevronRight size={16} className="shrink-0" />
-              <span className="text-gray-700 dark:text-gray-200 font-semibold truncate">{title}</span>
-            </nav>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight mb-5 max-w-4xl">
               {title}
             </h1>
 
             {subtitle && (
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl mb-1">
+              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl mb-1 whitespace-pre-line">
                 {subtitle}
               </p>
             )}

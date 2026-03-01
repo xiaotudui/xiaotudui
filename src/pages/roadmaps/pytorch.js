@@ -11,7 +11,6 @@ const stagesData = [
     status: 'upcoming',
     isLocked: true,
     asset: '/img/python.svg',
-    stubAsset: 'warrior',       // 右侧票根图片，可以是 DEFAULT_ASSETS 的 key 或直接图片路径如 '/img/game/xxx.gif'
     gradient: 'from-emerald-500 to-teal-600',
     content: {
       videos: [
@@ -35,7 +34,6 @@ const stagesData = [
     status: 'released',
     isLocked: false,
     asset: '/img/pytorch.svg',
-    stubAsset: 'castle',
     gradient: 'from-violet-500 to-purple-600',
     content: {
       videos: [
@@ -59,7 +57,6 @@ const stagesData = [
     status: 'upcoming',
     isLocked: true,
     asset: 'tower',
-    stubAsset: 'tree',          // 右侧票根图片
     gradient: 'from-blue-500 to-indigo-600',
     content: {
       videos: [
@@ -84,7 +81,8 @@ export default function PyTorchRoadmapPage() {
       <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0c1222] font-sans">
         <RoadmapHeader
           title="PyTorch 学习路线"
-          subtitle="从 Python 基础到 PyTorch 实战，循序渐进掌握深度学习核心技能。"
+          subtitle={`PyTorch 是深度学习中最流行的框架，或者说是工具。总而言之，先学好 PyTorch，是入门深度学习的最佳方式。
+这个学习路线，完全适合零基础入门，帮助你从入门到精通。`}
           icon="/img/pytorch.svg"
           stages={stagesData}
         />

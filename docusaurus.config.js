@@ -85,7 +85,7 @@ const config = {
           //   label: 'Tutorial'
           // },
           {
-            to: '/',
+            to: '/#roadmaps',
             label: '学习路线',
             position: 'left'
           },
