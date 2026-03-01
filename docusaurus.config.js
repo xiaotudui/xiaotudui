@@ -87,7 +87,8 @@ const config = {
           {
             to: '/#roadmaps',
             label: '学习路线',
-            position: 'left'
+            position: 'left',
+            activeBaseRegex: '^/$'
           },
           {
             to: '/tutorials',
