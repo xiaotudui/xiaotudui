@@ -44,7 +44,7 @@ const normalizeDifficulty = (difficulty, fallback = 1) => {
 // --- 组件：藏书馆守卫 NPC ---
 const ArchiveKeeper = () => {
   const [isTalking, setIsTalking] = useState(false);
-  const [quote, setQuote] = useState("这里是自由教程模式，可以根据自己的兴趣，自由学习不同的教程");
+  const [quote, setQuote] = useState("这里是文字教程模式，可以根据自己的兴趣，自由学习不同的教程");
   
   const handlePoke = () => {
     setIsTalking(true);
@@ -61,7 +61,7 @@ const ArchiveKeeper = () => {
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
         {/* 对话气泡 */}
         <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom">
-          <span className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
+          <span className="text-sm font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>
         <img src={ASSETS.arrow} className="w-52 h-52 object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-200" style={{ imageRendering: 'pixelated' }} alt="Archive Keeper" />
@@ -237,7 +237,7 @@ export default function TutorialsIndexPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="text-center md:text-left">
               <div className="inline-block px-5 py-2 mb-5 bg-blue-400 text-black font-black text-sm md:text-base uppercase tracking-wider transform -rotate-1 shadow-sm rounded-md">
-                自由教程模式
+                文字教程模式
               </div>
               <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
                 土堆 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">教程</span>

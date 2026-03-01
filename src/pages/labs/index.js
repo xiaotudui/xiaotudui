@@ -20,7 +20,7 @@ const isAssetPath = (v) =>
 
 // --- 组件：首席工程师 NPC ---
 const LabKeeper = () => {
-  const [quote, setQuote] = useState("这里汇聚各种工具帮助你更好的学习");
+  const [quote, setQuote] = useState("这里汇聚各种工具帮助你更好的学习，更好地理解一些概念。尽情探索吧！");
   
   const handlePoke = () => {
     const quotes = [
@@ -34,7 +34,7 @@ const LabKeeper = () => {
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
         {/* 对话气泡 */}
         <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom opacity-100 scale-100">
-          <span className="text-xs font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
+          <span className="text-sm font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>
         <img src={ASSETS.houseBuild} className="w-52 h-52 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-200" style={{ imageRendering: 'pixelated' }} alt="House Build" />

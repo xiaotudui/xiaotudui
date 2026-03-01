@@ -85,8 +85,13 @@ const config = {
           //   label: 'Tutorial'
           // },
           {
+            to: '/',
+            label: '学习路线',
+            position: 'left'
+          },
+          {
             to: '/tutorials',
-            label: '土堆教程',
+            label: '文字教程',
             position: 'left'
           },
           {

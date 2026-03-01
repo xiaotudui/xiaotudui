@@ -44,9 +44,7 @@ const GuildMaster = () => {
 
       <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
         <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-64 bg-white dark:bg-gray-800 px-3 py-2 rounded-2xl shadow-xl border-2 border-blue-500/20 transform transition-all duration-300 ${isTalking ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-100 translate-y-2'}`}>
-          <p className="mb-0 text-sm font-medium text-gray-700 dark:text-gray-200 text-center leading-relaxed">
-            "{quote}"
-          </p>
+          <span className="text-sm font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-blue-500/20 transform rotate-45"></div>
         </div>
 
