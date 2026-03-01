@@ -158,7 +158,7 @@ const config = {
         indexPages: true,
         docsRouteBasePath: '/docs',
         hashed: true,
-        language: ['en'],
+        language: ['zh'],
         highlightSearchTermsOnTargetPage: false,
         searchResultContextMaxLength: 50,
         searchResultLimits: 8,
