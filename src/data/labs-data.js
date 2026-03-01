@@ -30,6 +30,16 @@ export const toolsData = [
     link: '/labs/voc-dataset-viewer',
     isNew: false
   },
+  {
+    id: 4,
+    title: '卷积神经网络动图解释',
+    description: '用动图解释卷积神经网络的步骤，非常好玩的一个网站',
+    category: '深度学习基础',
+    icon: '/img/deep-learning.png',
+    color: 'bg-red-500',
+    link: 'https://poloclub.github.io/cnn-explainer/',
+    isNew: false
+  }
 ]
 
 // 获取所有分类
