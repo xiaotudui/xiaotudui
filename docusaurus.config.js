@@ -123,7 +123,11 @@ const config = {
             title: '我是土堆',
             items: [
               {
-                label: '土堆教程',
+                label: '学习路线',
+                to: '/#roadmaps'
+              },
+              {
+                label: "文字教程",
                 to: '/tutorials'
               },
               {
