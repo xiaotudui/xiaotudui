@@ -101,6 +101,11 @@ const config = {
             position: 'left'
           },
           {
+            to: 'https://mp.weixin.qq.com/s/Si_XOya1jrW_al_pKjlkTA',
+            label: '入门心得',
+            position: 'left'
+          },
+          {
             'href': 'https://space.bilibili.com/203989554',
             'position': 'right',
             'className': 'header-bilibili-link',

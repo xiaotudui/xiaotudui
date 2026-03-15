@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { 
   ArrowRight, Shield, Swords, Star, Coins, Scroll, Lock, 
-  Sparkles, Zap
+  Sparkles, Zap, BookOpen, ExternalLink
 } from 'lucide-react';
 import { roadmaps } from '@site/src/data/roadmap-data';
 
@@ -189,11 +189,22 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={handleScrollToRoadmaps}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold no-underline hover:no-underline hover:opacity-90 transition-opacity min-w-[220px]"
+                  className="inline-flex h-14 items-center justify-center gap-2 px-6 rounded-xl border-2 border-transparent bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold no-underline hover:no-underline hover:opacity-90 transition-opacity min-w-[220px]"
                 >
+                  <BookOpen className="w-4 h-4" />
                   开始学习路线
                   <ArrowRight className="w-4 h-4" />
                 </button>
+                <Link
+                  href="https://mp.weixin.qq.com/s/Si_XOya1jrW_al_pKjlkTA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-14 items-center justify-center gap-2 px-6 rounded-xl border-2 border-gray-900/15 dark:border-white/20 bg-white/80 dark:bg-transparent text-gray-900 dark:text-white font-bold no-underline hover:no-underline hover:bg-white dark:hover:bg-white/10 transition-colors min-w-[220px]"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  查看入门心得
+                  <ExternalLink className="w-4 h-4" />
+                </Link>
               </div>
             </div>
 
