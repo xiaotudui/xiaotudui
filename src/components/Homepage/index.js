@@ -24,7 +24,7 @@ const MAINLINE_QUOTES = [
 
 // --- 组件：公会接待员 (Hero 交互区) ---
 const GuildMaster = () => {
-  const [quote, setQuote] = useState("这里是学习路线模式：按路线循序学习，入门更轻松。");
+  const [quote, setQuote] = useState("不知道先学哪个，可以看下方学习路线。按学习路线循序学习，入门更轻松。");
   const [isTalking, setIsTalking] = useState(false);
 
   const handlePoke = () => {
@@ -182,7 +182,8 @@ export default function Home() {
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
                 入门难？不知道先学哪个？<br />
-                按照 <span className="font-bold text-gray-900 dark:text-white">学习路线</span>，循序学习，稳步提升。
+                按照 <span className="font-bold text-gray-900 dark:text-white">学习路线</span>，轻松从入门到进阶。<br />
+                另有<span className="font-bold text-gray-900 dark:text-white">入门心得</span>，一点愚见，仅供参考。
               </p>
 
               <div className="flex flex-col sm:flex-row items-center md:items-start gap-3 mb-4">
@@ -229,7 +230,7 @@ export default function Home() {
                    学习路线
                  </h2>
                  <p className="text-sm text-gray-500 font-medium mt-1">
-                   精心设计的学习路线，大师成长之路。
+                   精心设计的学习路线，更好更快入门。
                  </p>
               </div>
             </div>
