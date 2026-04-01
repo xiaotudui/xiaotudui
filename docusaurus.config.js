@@ -101,7 +101,7 @@ const config = {
             position: 'left'
           },
           {
-            to: 'https://mp.weixin.qq.com/s/Si_XOya1jrW_al_pKjlkTA',
+            href: 'https://mp.weixin.qq.com/s/Si_XOya1jrW_al_pKjlkTA',
             label: '入门心得',
             position: 'left'
           },

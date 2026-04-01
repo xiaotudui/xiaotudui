@@ -54,6 +54,7 @@
 }
 
 @layer base {
+
   /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -271,6 +272,26 @@ button {
   display: none;
 }
 
+/* 导航栏外链图标 */
+.navbar__item[href^="http"]:not(.header-bilibili-link):not(.header-wechat-link)::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
+  vertical-align: middle;
+  background-color: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  opacity: 0.6;
+  position: relative;
+  top: -1px;
+}
+
 .header-github-link::before {
   content: '';
   width: 24px;
@@ -292,37 +313,44 @@ button {
   width: 26px;
   height: 26px;
   display: flex;
-  background-color: #00aeec; /* Bilibili 官方蓝 - 明亮模式默认颜色 */
+  background-color: #00aeec;
+  /* Bilibili 官方蓝 - 明亮模式默认颜色 */
   /* 使用你提供的新 SVG */
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M36.5,12h-7.086l3.793-3.793c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L26.586,12 h-5.172l-5.207-5.207c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L18.586,12H12.5C9.467,12,7,14.467,7,17.5v15 c0,3.033,2.467,5.5,5.5,5.5h2c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h14c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h2 c3.033,0,5.5-2.467,5.5-5.5v-15C42,14.467,39.533,12,36.5,12z M39,32.5c0,1.378-1.122,2.5-2.5,2.5h-24c-1.378,0-2.5-1.122-2.5-2.5 v-15c0-1.378,1.122-2.5,2.5-2.5h24c1.378,0,2.5,1.122,2.5,2.5V32.5z'/%3E%3Crect width='2.75' height='7.075' x='30.625' y='18.463' transform='rotate(-71.567 32.001 22)'/%3E%3Crect width='7.075' height='2.75' x='14.463' y='20.625' transform='rotate(-18.432 17.998 21.997)'/%3E%3Cpath d='M28.033,27.526c-0.189,0.593-0.644,0.896-1.326,0.896c-0.076-0.013-0.139-0.013-0.24-0.025 c-0.013,0-0.05-0.013-0.063,0c-0.341-0.05-0.745-0.177-1.061-0.467c-0.366-0.265-0.808-0.745-0.947-1.477 c0,0-0.29,1.174-0.896,1.49c-0.076,0.05-0.164,0.114-0.253,0.164l-0.038,0.025c-0.303,0.164-0.682,0.265-1.086,0.278 c-0.568-0.051-0.947-0.328-1.136-0.821l-0.063-0.164l-1.427,0.656l0.05,0.139c0.467,1.124,1.465,1.768,2.74,1.768 c0.922,0,1.667-0.303,2.209-0.909c0.556,0.606,1.288,0.909,2.209,0.909c1.856,0,2.55-1.288,2.765-1.843l0.051-0.126l-1.427-0.657 L28.033,27.526z'/%3E%3C/svg%3E");
   transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .header-bilibili-link:hover::before {
-  background-color: #0099d4; /* Bilibili 悬停时稍深的蓝色 */
+  background-color: #0099d4;
+  /* Bilibili 悬停时稍深的蓝色 */
 }
 
 html[data-theme='dark'] .header-bilibili-link::before {
-  background-color: #00aeec; /* 暗黑模式下也使用 Bilibili 官方蓝 */
+  background-color: #00aeec;
+  /* 暗黑模式下也使用 Bilibili 官方蓝 */
 }
 
 
 .header-wechat-link::before {
   content: '';
-  width: 24px; /* 微调大小以视觉平衡 */
+  width: 24px;
+  /* 微调大小以视觉平衡 */
   height: 24px;
   display: block;
-  background-color: #07c160; /* 微信绿 - 明亮模式默认颜色 */
+  background-color: #07c160;
+  /* 微信绿 - 明亮模式默认颜色 */
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M 19 6 C 9.625 6 2 12.503906 2 20.5 C 2 24.769531 4.058594 28.609375 7.816406 31.390625 L 5.179688 39.304688 L 13.425781 34.199219 C 15.714844 34.917969 18.507813 35.171875 21.203125 34.875 C 23.390625 39.109375 28.332031 42 34 42 C 35.722656 42 37.316406 41.675781 38.796875 41.234375 L 45.644531 45.066406 L 43.734375 38.515625 C 46.3125 36.375 48 33.394531 48 30 C 48 23.789063 42.597656 18.835938 35.75 18.105469 C 34.40625 11.152344 27.367188 6 19 6 Z M 13 14 C 14.101563 14 15 14.898438 15 16 C 15 17.101563 14.101563 18 13 18 C 11.898438 18 11 17.101563 11 16 C 11 14.898438 11.898438 14 13 14 Z M 25 14 C 26.101563 14 27 14.898438 27 16 C 27 17.101563 26.101563 18 25 18 C 23.898438 18 23 17.101563 23 16 C 23 14.898438 23.898438 14 25 14 Z M 34 20 C 40.746094 20 46 24.535156 46 30 C 46 32.957031 44.492188 35.550781 42.003906 37.394531 L 41.445313 37.8125 L 42.355469 40.933594 L 39.105469 39.109375 L 38.683594 39.25 C 37.285156 39.71875 35.6875 40 34 40 C 27.253906 40 22 35.464844 22 30 C 22 24.535156 27.253906 20 34 20 Z M 29.5 26 C 28.699219 26 28 26.699219 28 27.5 C 28 28.300781 28.699219 29 29.5 29 C 30.300781 29 31 28.300781 31 27.5 C 31 26.699219 30.300781 26 29.5 26 Z M 38.5 26 C 37.699219 26 37 26.699219 37 27.5 C 37 28.300781 37.699219 29 38.5 29 C 39.300781 29 40 28.300781 40 27.5 C 40 26.699219 39.300781 26 38.5 26 Z'/%3E%3C/svg%3E");
   transition: background-color 0.2s ease;
 }
 
 .header-wechat-link:hover::before {
-  background-color: #06ad56; /* 微信绿悬停时稍深的绿色 */
+  background-color: #06ad56;
+  /* 微信绿悬停时稍深的绿色 */
 }
 
 html[data-theme='dark'] .header-wechat-link::before {
-  background-color: #07c160; /* 暗黑模式下也使用微信绿 */
+  background-color: #07c160;
+  /* 暗黑模式下也使用微信绿 */
 }
 
 /* 微信公众号弹窗样式 */
@@ -335,6 +363,7 @@ html[data-theme='dark'] .header-wechat-link::before {
     opacity: 0;
     transform: translateY(-4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -351,6 +380,7 @@ html[data-theme='dark'] .header-wechat-link::before {
     opacity: 0;
     transform: translateX(-50%) translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
@@ -374,6 +404,7 @@ html[data-theme='dark'] .header-wechat-link::before {
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.95);
     }
+
     to {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
@@ -430,7 +461,7 @@ div[class^='tableOfContents_'] {
   }
 }
 
-div[class^='docItemContainer_'] article nav + div > button.clean-btn {
+div[class^='docItemContainer_'] article nav+div>button.clean-btn {
   color: #ffffff00;
 
   &::before {
@@ -469,6 +500,7 @@ div[class^='docItemContainer_'] article img {
 
 /* Tablet */
 @media screen and (max-width: 991px) {
+
   /* Search navbar local */
   .navbar__search-input {
     width: 14rem;
