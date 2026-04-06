@@ -17,9 +17,8 @@ const DEFAULT_ASSETS = {
 
 // --- 推荐度配置 ---
 const IMPORTANCE_CONFIG = {
-  must: { label: '必看', accent: '#c41e1e' },
-  recommended: { label: '推荐', accent: '#1a6bb5' },
-  optional: { label: '可选', accent: '#6b7280' },
+  must: { label: '入门', accent: '#c41e1e' },
+  recommended: { label: '进阶', accent: '#1a6bb5' },
 };
 
 // --- 制作状态配置 ---
@@ -172,7 +171,7 @@ const ZigzagEdge = ({ position = 'top', className = '' }) => {
 // --- 主卡片组件（票据样式 - locked/unlocked 统一结构）---
 const StageRow = ({ stage, index, isLast, assets }) => {
   const { isLocked, content } = stage;
-  const impConfig = IMPORTANCE_CONFIG[stage.importance] || IMPORTANCE_CONFIG.optional;
+  const impConfig = IMPORTANCE_CONFIG[stage.importance] || IMPORTANCE_CONFIG.recommended;
 
   // 左侧素材
   const assetKey = stage.asset || 'castle';
