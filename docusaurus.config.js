@@ -59,6 +59,10 @@ const config = {
             'https://github.com/xiaotudui/xiaotudui/tree/main'
         },
         blog: false,
+        gtag: {
+          trackingID: 'G-JZJCVBMPSB',
+          anonymizeIP: true
+        },
         theme: {
           customCss: './src/css/custom.css'
         }
