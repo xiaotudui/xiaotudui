@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '@theme/Layout';
 import { RoadmapHeader, RoadmapStages } from '@site/src/components/Roadmap';
 
 // --- 关卡数据 ---
-const stagesData = [
+const beginnerStages = [
   {
     title: 'PyTorch 学习路线',
     desc: '先去学习 PyTorch 学习路线，掌握如何使用 PyTorch，再进行目标检测的学习。',
@@ -67,10 +67,13 @@ const stagesData = [
         { title: '下载课程资料', link: '#' }
       ]
     }
-  },
+  }
+];
+
+const advancedStages = [
   {
     title: '目标检测 进阶教程（YOLO系列）',
-    desc: '在这里，我们了解如何使用这个先进的 ultralytics 框架来训练你自己的目标检测模型。',
+    desc: '了解更多 YOLO 系列的高阶使用技巧与底层原理，深入掌握目标检测的进阶内容。',
     importance: 'recommended',
     status: 'upcoming',
     isLocked: true,
@@ -91,10 +94,13 @@ const stagesData = [
         { title: '下载课程资料', link: '#' }
       ]
     }
-  },
+  }
 ];
 
 export default function ObjectDetectionRoadmapPage() {
+  const [activeSeries, setActiveSeries] = useState('beginner');
+  const currentStages = activeSeries === 'beginner' ? beginnerStages : advancedStages;
+
   return (
     <Layout title="目标检测学习路线" description="游戏化的目标检测学习路线图">
       <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0c1222] font-sans">
@@ -103,10 +109,43 @@ export default function ObjectDetectionRoadmapPage() {
           subtitle={`目标检测是应用很广的领域。总而言之，就是我们想让模型帮我们找到我们感兴趣的目标。
           这个学习路线，帮助你从零开始了解目标检测，并帮助你应用到自己的课题/工作中。`}
           icon="/img/object-detection.png"
-          stages={stagesData}
+          stages={beginnerStages.concat(advancedStages)}
         />
-        <div className="max-w-6xl mx-auto px-4 py-12">
-          <RoadmapStages stages={stagesData} />
+        
+        {/* Toggle UI */}
+        <div className="max-w-6xl mx-auto px-4 pt-10 flex justify-center">
+          <div className="inline-flex bg-gray-200/50 dark:bg-gray-800/50 rounded-full p-1.5 shadow-inner">
+            <button
+              onClick={() => setActiveSeries('beginner')}
+              className={`px-8 py-2.5 rounded-full text-base font-bold transition-all duration-300 ${
+                activeSeries === 'beginner'
+                  ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-[0_2px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.3)]'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800'
+              }`}
+            >
+              入门系列
+            </button>
+            <button
+              onClick={() => setActiveSeries('advanced')}
+              className={`px-8 py-2.5 rounded-full text-base font-bold transition-all duration-300 ${
+                activeSeries === 'advanced'
+                  ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-[0_2px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.3)]'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800'
+              }`}
+            >
+              进阶系列
+            </button>
+          </div>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          {currentStages.length > 0 ? (
+             <RoadmapStages stages={currentStages} />
+          ) : (
+             <div className="text-center py-20 text-gray-500 dark:text-gray-400 font-bold">
+               当前系列还在筹备中，敬请期待！
+             </div>
+          )}
         </div>
       </div>
     </Layout>
