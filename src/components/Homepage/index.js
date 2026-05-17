@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -18,23 +18,29 @@ const ASSETS = {
 
 // --- 随机台词库 ---
 const MAINLINE_QUOTES = [
-  "学习路线模式会按学习路线推进，更适合从零开始系统入门。",
-  "如果你已经知道自己想学什么，可以去文字教程，学习你想学的教程。",
+  "不知道先学哪个，可以按照下方的学习路线进行学习",
+  "学习路线分为 入门 和 进阶 两个等级噢",
+  "网站右上角有我主人的联系方式，欢迎关注，可以私信他提问"
 ];
 
 // --- 组件：公会接待员 (Hero 交互区) ---
 const GuildMaster = () => {
-  const [quote, setQuote] = useState("不知道先学哪个，可以看下方学习路线。按学习路线循序学习，入门更轻松。");
-  const [isTalking, setIsTalking] = useState(false);
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [isTalking, setIsTalking] = useState(true);
 
-  const handlePoke = () => {
-    setIsTalking(false);
-    setTimeout(() => {
-      const randomQuote = MAINLINE_QUOTES[Math.floor(Math.random() * MAINLINE_QUOTES.length)];
-      setQuote(randomQuote);
-      setIsTalking(true);
-    }, 50);
-  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIsTalking(false);
+      setTimeout(() => {
+        setQuoteIndex((prev) => (prev + 1) % MAINLINE_QUOTES.length);
+        setIsTalking(true);
+      }, 300); // 留出动画缩回的时间
+    }, 4000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const quote = MAINLINE_QUOTES[quoteIndex];
 
   return (
     <div className="relative h-64 w-full flex items-end justify-center perspective-1000">
@@ -42,8 +48,8 @@ const GuildMaster = () => {
         <img src={ASSETS.tower} className="w-24 drop-shadow-2xl" alt="Tower" />
       </div>
 
-      <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
-        <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-64 bg-white dark:bg-gray-800 px-3 py-2 rounded-2xl shadow-xl border-2 border-blue-500/20 transform transition-all duration-300 ${isTalking ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-100 translate-y-2'}`}>
+      <div className="relative z-10 group">
+        <div className={`absolute -top-24 left-1/2 -translate-x-1/2 w-64 bg-white dark:bg-gray-800 px-3 py-2 rounded-2xl shadow-xl border-2 border-blue-500/20 transform transition-all duration-300 ${isTalking ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-2'}`}>
           <span className="text-sm font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-blue-500/20 transform rotate-45"></div>
         </div>
@@ -54,10 +60,6 @@ const GuildMaster = () => {
           style={{ imageRendering: 'pixelated' }} 
           alt="Warrior" 
         />
-        
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-           <span className="animate-bounce text-xs font-bold text-blue-500">👆 戳我一下!</span>
-        </div>
       </div>
     </div>
   );

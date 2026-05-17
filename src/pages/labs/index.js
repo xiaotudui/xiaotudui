@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import { 
@@ -18,22 +18,37 @@ const ASSETS = {
 const isAssetPath = (v) =>
   typeof v === 'string' && (v.startsWith('/') || v.startsWith('http') || /\.(svg|png|jpg|jpeg|gif|webp)$/i.test(v));
 
+// --- 实验室台词库 ---
+const LAB_QUOTES = [
+  "这里汇聚各种工具帮助你更好的学习，更好地理解一些概念。尽情探索吧！",
+  "有些工具是自制的，有些工具是外面的。",
+  "网站右上角有我主人的联系方式，欢迎关注，可以私信他提问"
+];
+
 // --- 组件：首席工程师 NPC ---
 const LabKeeper = () => {
-  const [quote, setQuote] = useState("这里汇聚各种工具帮助你更好的学习，更好地理解一些概念。尽情探索吧！");
-  
-  const handlePoke = () => {
-    const quotes = [
-      "有些工具是自制的，有些工具是外面的。",
-    ];
-    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
-  };
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [isTalking, setIsTalking] = useState(true);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIsTalking(false);
+      setTimeout(() => {
+        setQuoteIndex((prev) => (prev + 1) % LAB_QUOTES.length);
+        setIsTalking(true);
+      }, 300);
+    }, 4000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const quote = LAB_QUOTES[quoteIndex];
 
   return (
     <div className="relative h-64 w-full flex items-end justify-center perspective-1000 group/npc select-none">
-      <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
+      <div className="relative z-10 group">
         {/* 对话气泡 */}
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom opacity-100 scale-100">
+        <div className={`absolute -top-8 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom ${isTalking ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           <span className="text-sm font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>

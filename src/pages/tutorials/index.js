@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import { 
@@ -41,26 +41,37 @@ const normalizeDifficulty = (difficulty, fallback = 1) => {
   return difficultyMap[difficulty] || fallback;
 };
 
+// --- 藏书馆台词库 ---
+const TUTORIAL_QUOTES = [
+  "这里是文字教程，可以查看对应视频教程的文字稿",
+  "如果不知道看哪个，可以去看学习路线",
+  "网站右上角有我主人的联系方式，欢迎关注，可以私信他提问"
+];
+
 // --- 组件：藏书馆守卫 NPC ---
 const ArchiveKeeper = () => {
-  const [isTalking, setIsTalking] = useState(false);
-  const [quote, setQuote] = useState("这里是文字教程模式，可以根据自己的兴趣，自由学习不同的教程");
-  
-  const handlePoke = () => {
-    setIsTalking(true);
-    const quotes = [
-      "学习路线模式强调学习路径，这里更适合按兴趣自由探索。",
-      "如果你不确定学什么，可以去首页用学习路线模式来学习。",
-    ];
-    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
-    setTimeout(() => setIsTalking(false), 3000);
-  };
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [isTalking, setIsTalking] = useState(true);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIsTalking(false);
+      setTimeout(() => {
+        setQuoteIndex((prev) => (prev + 1) % TUTORIAL_QUOTES.length);
+        setIsTalking(true);
+      }, 300);
+    }, 4000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const quote = TUTORIAL_QUOTES[quoteIndex];
 
   return (
     <div className="relative h-64 w-full flex items-end justify-center perspective-1000 group/npc select-none">
-      <div className="relative z-10 cursor-pointer group" onClick={handlePoke}>
+      <div className="relative z-10 group">
         {/* 对话气泡 */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom">
+        <div className={`absolute -top-12 left-1/2 -translate-x-1/2 w-56 bg-white dark:bg-gray-800 px-3 py-2 rounded-xl shadow-xl border-2 border-indigo-200 dark:border-indigo-800 transform transition-all duration-300 origin-bottom ${isTalking ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           <span className="text-sm font-bold text-gray-700 dark:text-gray-300 text-center leading-relaxed block">{quote}</span>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-b-2 border-r-2 border-indigo-200 dark:border-indigo-800 rotate-45"></div>
         </div>
