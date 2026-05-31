@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Layout from '@theme/Layout';
+import LabsIntroPromo from '../../components/LabsIntroPromo';
 
 const COCODatasetView = () => {
   const [image, setImage] = useState(null);
@@ -330,6 +331,7 @@ const COCODatasetView = () => {
               COCO Dataset Download
             </a>
           </p>
+          <LabsIntroPromo />
         </div>
 
         <div className="text-center mb-4">

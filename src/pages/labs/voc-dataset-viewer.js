@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Layout from '@theme/Layout';
+import LabsIntroPromo from '../../components/LabsIntroPromo';
 
 const VOCDatasetView = () => {
   const [image, setImage] = useState(null);
@@ -194,7 +195,7 @@ const VOCDatasetView = () => {
               VOC 竞赛以及数据集官网
             </a>
           </p>
-
+          <LabsIntroPromo />
         </div>
 
         <div className="text-center mb-4">

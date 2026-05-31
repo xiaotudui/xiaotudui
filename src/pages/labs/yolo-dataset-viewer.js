@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Layout from '@theme/Layout';
+import LabsIntroPromo from '../../components/LabsIntroPromo';
 
 const YOLODatasetView = () => {
   const [image, setImage] = useState(null);
@@ -185,6 +186,7 @@ const YOLODatasetView = () => {
               COCO128
             </a>
           </p>
+          <LabsIntroPromo />
         </div>
 
         {/* 文件上传区域 */}
