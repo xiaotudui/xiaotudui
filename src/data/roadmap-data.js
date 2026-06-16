@@ -20,11 +20,12 @@ export const roadmaps = [
     difficulty: 'S',
   },
   {
-    id: 'nlp-llm',
-    title: '大语言模型/自然语言处理',
-    description: '从基础NLP到大型语言模型的完整学习路径',
-    link: '/roadmaps/nlp-llm',
+    id: 'llm',
+    title: '大语言模型学习路线',
+    description: '学习大语言模型的工作原理，以及动手训练一个自己的模型。',
+    link: '/roadmaps/llm',
     icon: '🤖',
-    comingSoon: true,
+    rank: 'S',
+    difficulty: 'S',
   },
 ];
